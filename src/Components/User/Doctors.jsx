@@ -60,9 +60,10 @@ function Doctors() {
     const handleSearchSubmit = (e) => {
         e.preventDefault()
         const searchName = searchDoc.toLowerCase()
-        if (filteredDept !== "") {
+        if (filteredDept.length !== 0) {
 
             setDoctors(allDoctors.filter(doctor => doctor.department.dept_name === filteredDept && doctor.name.toLowerCase().includes(searchName)))
+            setFilteredDept("")
         }
         else {
             setDoctors(allDoctors.filter(doctor => doctor.name.toLowerCase().includes(searchName)))

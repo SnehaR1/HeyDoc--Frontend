@@ -32,7 +32,7 @@ function NavBar() {
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">Home</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500 flex flex-row">Departments</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/doctors")}>Doctors</p>
-                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">Blogs</p>
+                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/blogs")}>Blogs</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/aboutUs")}>About Us</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/contactUs")}>Contact Us</p>
 

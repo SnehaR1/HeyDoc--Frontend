@@ -29,6 +29,8 @@ import AdminBlogs from './Components/Admin/AdminBlogs';
 import AddBlogs from './Components/Admin/AddBlogs';
 import Bookings from './Components/Admin/Bookings';
 import EditBlog from './Components/Admin/EditBlog';
+import Blogs from './Components/User/Blogs';
+import BlogPage from './Components/User/BlogPage';
 
 function App() {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
@@ -44,6 +46,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/contactUs' element={<ContactUsForm />} />
           <Route path='/aboutUs' element={<AboutUs />} />
+          <Route path='/blogs' element={<Blogs />} />
+          <Route path='/blogPage' element={isAuthenticated ? <BlogPage /> : <Login />} />
           <Route path='/doctorLogin' element={<DoctorLogin />} />
           <Route path='/doctors' element={isAuthenticated ? <Doctors /> : <Login />} />
           <Route path='/profile' element={isAuthenticated ? <Profile /> : <Login />} />
