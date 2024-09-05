@@ -38,6 +38,7 @@ function AddDepartment() {
     return (
         <div>
             <AdminNavBar />
+            <h1 className='text-blue-800 text-2xl my-3 font-bold'>ADD DEPARTMENT</h1>
             <div className="container mx-auto mt-12 p-4 max-w-4xl">
                 <form className="bg-white shadow-2xl rounded-lg px-8 pt-6 pb-8" onSubmit={handleSubmit} encType="multipart/form-data">
                     <h1 className='text-2xl font-bold'>Add Department</h1>

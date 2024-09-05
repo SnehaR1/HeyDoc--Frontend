@@ -1,6 +1,7 @@
 import React from 'react'
 import NavBar from './NavBar'
 import HomeMain from '../../Images/HomeMain.jpg'
+import Footer from './Footer'
 function Home() {
     const backStyle = {
         backgroundImage: `url(${HomeMain})`,
@@ -21,8 +22,8 @@ function Home() {
 
 
                 </div>
-
-            </div></div>
+            </div>
+            <Footer /></div>
     )
 }
 

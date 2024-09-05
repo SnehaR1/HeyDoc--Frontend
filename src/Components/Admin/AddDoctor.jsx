@@ -10,7 +10,7 @@ function AddDoctor() {
     useEffect(() => {
         const fetchDepartment = async () => {
             try {
-                const res = await adminapi.get("doctor/?type=department")
+                const res = await adminapi.get("doctor_form/?type=department")
                 console.log(res.data.data)
                 setDepartments(res.data.data)
 
@@ -50,7 +50,7 @@ function AddDoctor() {
     return (
         <div>
             <AdminNavBar />
-            <div className="container mx-auto mt-12 p-4 max-w-4xl">
+            <div className="container mx-auto mt-12 p-2 max-w-4xl">
                 <form className="bg-white shadow-2xl rounded-lg px-8 pt-6 pb-8" encType="multipart/form-data" onSubmit={handleSubmit}>
                     <h1 className='text-2xl font-bold'>Add Doctor</h1>
                     <div className="my-6">
@@ -86,6 +86,23 @@ function AddDoctor() {
 
                         </select>
                     </div>
+                    <div className="max-w-sm mx-auto my-3">
+
+                        <label htmlFor="fee" className="block text-sm font-medium text-gray-700">
+                            Fee in INR
+                        </label>
+                        <input
+                            type="number"
+                            name="fee"
+                            id="fee"
+
+                            onChange={(e) => setInfo({ ...info, [e.target.name]: e.target.value })}
+                            step="1"
+                            className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            placeholder="Enter fee amount"
+                        />
+                    </div>
+
 
                     <div className="flex justify-center items-center my-6">
                         <input onChange={(e) => { setInfo({ ...info, [e.target.name]: e.target.checked }) }} name="is_HOD" id="inline-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />

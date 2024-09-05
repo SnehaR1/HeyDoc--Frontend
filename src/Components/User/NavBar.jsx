@@ -30,11 +30,11 @@ function NavBar() {
             <h1 className='text-blue-600 font-bold text-3xl mb-3 '>HeyDoc</h1>
             <div className='flex flex-row p-3 items-center mb-3'>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">Home</p>
-                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500 flex flex-row">Services </p>
+                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500 flex flex-row">Departments</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/doctors")}>Doctors</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">Blogs</p>
-                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">About Us</p>
-                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">Contact Us</p>
+                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/aboutUs")}>About Us</p>
+                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/contactUs")}>Contact Us</p>
 
                 <button className='text-white p-3 bg-blue-900 rounded-xl ml-3 font-bold  hover:bg-blue-500'>Appointment +</button>
 
@@ -51,10 +51,13 @@ function NavBar() {
                             {isAuthenticated ?
 
                                 <>
-
                                     <li>
 
-                                        <p className="block px-4 py-2 hover:bg-gray-100 font-semibold" onClick={() => navigate("/appointmentList")} >Your Appointments</p>
+                                        <p className="block px-4 py-2 hover:bg-gray-100 font-semibold" onClick={() => navigate("/profile")} >Profile</p>
+                                    </li>
+                                    <li>
+
+                                        <p className="block px-4 py-2 hover:bg-gray-100 font-semibold" onClick={() => navigate("/appointmentList")} >Appointments</p>
                                     </li>
                                     <li>
 

@@ -10,6 +10,7 @@ function AppointmentList() {
     const [openModal, setOpenModal] = useState(false)
     const [id, setId] = useState(null)
     const [message, setMessage] = useState("")
+    const [refresh, setRefresh] = useState(false)
     useEffect(() => {
         const fetchAppointments = async () => {
             try {
@@ -17,19 +18,22 @@ function AppointmentList() {
                 console.log(response.data.data)
                 setAppointments(response.data.data)
 
+
             } catch (error) {
                 console.log(error)
             }
         }; fetchAppointments();
 
 
-    }, [])
+    }, [refresh])
     const handleCancelReq = async () => {
         try {
             const cancelInfo = { "id": id, "cancelled_by": user, "reason": "Patient Requested" }
             const response = await adminapi.post("cancel_appointment/", cancelInfo)
             console.log(response)
-            setMessage("Cancel Request sent.You will soon hear from our team!")
+            setMessage(response.data.message)
+            setOpenModal(false)
+            setRefresh(refresh => !refresh)
 
         } catch (error) {
             console.log(error)
@@ -97,11 +101,13 @@ function AppointmentList() {
                                         <td className="px-6 py-4">
                                             {appointment.payment_status}
                                         </td>
-                                        {appointment.payment_status !== "Cancelled" ? (
+                                        {appointment.booking_status !== "Cancelled" ? (
                                             <td className="px-6 py-4 hover:underline hover:text-blue-500" onClick={() => { setOpenModal(true); setId(appointment.id) }}>
                                                 Cancel
                                             </td>
-                                        ) : null}
+                                        ) : <td className="px-6 py-4 hover:underline hover:text-blue-500">
+                                            Cancelled
+                                        </td>}
                                     </tr>
                                 )) : (
                                     <tr>

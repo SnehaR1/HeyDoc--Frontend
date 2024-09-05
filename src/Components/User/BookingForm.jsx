@@ -37,7 +37,7 @@ const BookingForm = () => {
         const selectedDate = new Date(date);
         selectedDate.setHours(0, 0, 0, 0);
 
-        if (selectedDate < currentDate) {
+        if (selectedDate <= currentDate) {
             setIsAvailable(false);
             setFilteredSlots([]);
             return;

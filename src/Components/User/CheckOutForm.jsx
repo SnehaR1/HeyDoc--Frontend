@@ -165,7 +165,7 @@ function CheckOutForm() {
 
 
                     {openModal ? <div id="authentication-modal" tabindex="-1" aria-hidden="true" className="bg-transparent flex  z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                        <div className=" relative p-4 w-full max-w-md max-h-full">
+                        <div className=" relative p-4 w-full max-w-md max-h-full inset-0 z-50">
 
                             <div className="relative bg-white rounded-lg shadow dark:bg-gray-700 p-4 ">
 
