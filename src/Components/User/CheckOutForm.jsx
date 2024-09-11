@@ -12,6 +12,7 @@ function CheckOutForm() {
     const slot = useSelector(state => state.booking.selectedSlot)
     const fee = useSelector(state => state.booking.fee)
     const doc_id = useSelector(state => state.booking.doc_id)
+    const day = useSelector(state => state.booking.selectedDay)
     const [patientName, setPatientName] = useState("")
     const Razorpay = useRazorpay();
     const [openPayButton, setOpenPayButton] = useState(false)

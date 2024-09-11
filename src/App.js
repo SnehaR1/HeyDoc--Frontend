@@ -31,19 +31,27 @@ import Bookings from './Components/Admin/Bookings';
 import EditBlog from './Components/Admin/EditBlog';
 import Blogs from './Components/User/Blogs';
 import BlogPage from './Components/User/BlogPage';
+import CancelledBooking from './Components/Admin/CancelledBooking';
+import ResetPassword from './Components/User/ResetPassword';
+import DoctorResetPassword from './Components/Doctor/DoctorResetPassword';
 
 function App() {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
   const is_staff = useSelector(state => state.auth.is_staff)
 
   const doc_authenticated = useSelector(state => state.doctorauth.isAuthenticated)
+  const otp_verified = useSelector(state => state.resetPass.otp_verified)
+  console.log('OTP Verified:', otp_verified);
   return (
     <div className="App">
       <Router>
         <Routes>
           <Route path='/' element={<Home />} />
+
           <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
+          <Route path='/resetPassword' element={otp_verified ? <ResetPassword /> : <Login />} />
+          <Route path='/docResetPassword' element={otp_verified ? <DoctorResetPassword /> : <Login />} />
           <Route path='/contactUs' element={<ContactUsForm />} />
           <Route path='/aboutUs' element={<AboutUs />} />
           <Route path='/blogs' element={<Blogs />} />
@@ -62,6 +70,7 @@ function App() {
           <Route path='/addDepartment' element={isAuthenticated && is_staff ? <AddDepartment /> : <Login />} />
           <Route path='/editDepartment' element={isAuthenticated && is_staff ? <EditDepartment /> : <Login />} />
           <Route path='/adminBookings' element={isAuthenticated && is_staff ? <Bookings /> : <Login />} />
+          <Route path='/cancelledBooking' element={isAuthenticated && is_staff ? <CancelledBooking /> : <Login />} />
           <Route path='/adminBlogs' element={isAuthenticated && is_staff ? <AdminBlogs /> : <Login />} />
           <Route path='/addBlogs' element={isAuthenticated && is_staff ? <AddBlogs /> : <Login />} />
           <Route path='/editBlog' element={isAuthenticated && is_staff ? <EditBlog /> : <Login />} />

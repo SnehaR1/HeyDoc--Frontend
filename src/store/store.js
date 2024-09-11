@@ -7,6 +7,7 @@ import { combineReducers } from 'redux';
 
 import authReducer from '../auth/authslice';
 import doctorauthReducer from '../auth/doctorauthSlice';
+import resetPassReducer from '../auth/resetPassSlice';
 import bookingReducer from '../booking/bookingSlice';
 
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
     auth: authReducer,
     doctorauth: doctorauthReducer,
     booking: bookingReducer,
+    resetPass: resetPassReducer,
 });
 
 

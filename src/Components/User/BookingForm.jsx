@@ -28,6 +28,7 @@ const BookingForm = () => {
     const [selectedSlot, setSelectedSlot] = useState(null);
     const [filteredSlots, setFilteredSlots] = useState([]);
     const [isAvailable, setIsAvailable] = useState(false);
+    const [selectedDay, setSelectedDay] = useState(null)
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
@@ -47,6 +48,7 @@ const BookingForm = () => {
         const dayOfWeek = date.getDay();
         const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         const selectedDayName = dayNames[dayOfWeek];
+        setSelectedDay(selectedDayName)
 
 
         const dayAvailability = availability.find(avail => avail.day_of_week === selectedDayName);

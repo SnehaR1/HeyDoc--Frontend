@@ -22,7 +22,7 @@ function BookingConfirmation() {
                     <p className="text-lg text-gray-700"><span className="font-semibold">Doctor: </span> {doctor_name}</p>
                     <p className="text-lg text-gray-700"><span className="font-semibold">Payment Mode: </span> {payment_mode}</p>
                     <p className="text-lg text-gray-700"><span className="font-semibold">Payment Status: </span> {payment_status}</p>
-                    <p className="text-lg text-gray-700"><span className="font-semibold">Razor Payment ID: </span> {data["razorpay_payment_id"]}</p>
+                    {data["razorpay_payment_id"] ? <p className="text-lg text-gray-700"><span className="font-semibold">Razor Payment ID: </span> {data["razorpay_payment_id"]}</p> : <></>}
                 </div>
                 <div className="border-t mt-6 pt-4 text-center">
                     <p className="text-sm text-gray-500">Thank you for your booking!<span onClick={() => navigate("/")}>Go Home</span></p>

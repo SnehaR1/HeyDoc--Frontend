@@ -40,7 +40,7 @@ function AdminNavBar() {
                 <p onClick={() => navigate("/adminBookings")} className=" px-4 flex justify-center  hover:text-blue-500" ><FaBook className='w-6 h-6 mr-2' />Bookings</p>
 
 
-                <p className="ml-8 text-grey-300 font-semibold text-l hover:text-blue-500 " >{username}</p>
+                <p className="ml-8 text-grey-300 font-semibold text-l hover:text-blue-500 " onClick={() => navigate("/")}>{username}</p>
                 <div className='relative'>
 
 

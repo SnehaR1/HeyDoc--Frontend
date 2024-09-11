@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import NavBar from './NavBar'
 import { adminapi, api } from '../../api';
 import { useSelector } from 'react-redux';
-
+import { RxCross2 } from "react-icons/rx";
 
 function AppointmentList() {
     const user = useSelector(state => state.auth.user_id)
@@ -48,11 +48,11 @@ function AppointmentList() {
 
 
                     <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-                        <span class="font-medium">{message}</span>
+                        <span class="font-medium flex justify-between ">{message}<RxCross2 onClick={setMessage("")} /></span>
                     </div> : <></>
                 }
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-gray-700 uppercase bg-black-50 dark:bg-black-700 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-blue-100 dark:bg-black-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-3">
                                 Patient Name
@@ -105,8 +105,9 @@ function AppointmentList() {
                                             <td className="px-6 py-4 hover:underline hover:text-blue-500" onClick={() => { setOpenModal(true); setId(appointment.id) }}>
                                                 Cancel
                                             </td>
-                                        ) : <td className="px-6 py-4 hover:underline hover:text-blue-500">
+                                        ) : <td className="px-6 py-4 ">
                                             Cancelled
+
                                         </td>}
                                     </tr>
                                 )) : (
