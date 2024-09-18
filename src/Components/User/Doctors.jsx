@@ -41,12 +41,16 @@ function Doctors() {
                 const slots = data.slots;
                 const doctor = doctors.find((doctor) => doctor["doc_id"] === doc_id);
                 const fee = doctor ? doctor["fee"] : null;
+                const evening_slots = data.evening_slots;
+                const morning_slots = data.morning_slots;
+                const days_available = data.days_available;
 
 
 
 
 
-                dispatch(addBookingDetails({ availability, time_slot, slots, doc_id, fee }))
+
+                dispatch(addBookingDetails({ availability, time_slot, slots, doc_id, fee, evening_slots, morning_slots, days_available }))
             } else {
                 console.log("Failed to fetch booking data:", data.error);
             }

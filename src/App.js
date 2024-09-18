@@ -34,6 +34,9 @@ import BlogPage from './Components/User/BlogPage';
 import CancelledBooking from './Components/Admin/CancelledBooking';
 import ResetPassword from './Components/User/ResetPassword';
 import DoctorResetPassword from './Components/Doctor/DoctorResetPassword';
+import DocPatients from './Components/Doctor/DocPatients';
+import VideoRoomID from './Components/Doctor/VideoRoomID';
+import VideoRoom from './Components/Doctor/VideoRoom';
 
 function App() {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
@@ -78,7 +81,10 @@ function App() {
           <Route path='/editDoctor' element={isAuthenticated && is_staff ? <EditDoctor /> : <Login />} />
           <Route path='/requests' element={isAuthenticated && is_staff ? <Requests /> : <Login />} />
           <Route path='/doctorHome' element={doc_authenticated ? <DoctorHome /> : <Login />} />
+          <Route path='/docPatients' element={doc_authenticated ? <DocPatients /> : <Login />} />
           <Route path='/schedule' element={doc_authenticated ? <Schedule /> : <Login />} />
+          <Route path='/onlineRoom' element={doc_authenticated || isAuthenticated ? <VideoRoomID /> : <Login />} />
+          <Route path='/onlineRoom/:roomId' element={doc_authenticated || isAuthenticated ? <VideoRoom /> : <Login />} />
 
         </Routes>
       </Router>

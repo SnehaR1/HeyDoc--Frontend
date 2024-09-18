@@ -26,7 +26,7 @@ function DocNavBar() {
             <div className='flex flex-row p-3 items-center mb-3'>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/doctorHome")}>Dashboard</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500 flex flex-row" onClick={() => navigate("/schedule")}>Schedule</p>
-                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">Patients</p>
+                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/docPatients")}>Patients</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">Messages</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">Requests</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">Appointments</p>

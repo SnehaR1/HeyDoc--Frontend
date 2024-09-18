@@ -3,7 +3,7 @@ import NavBar from './NavBar'
 import { adminapi, api } from '../../api';
 import { useSelector } from 'react-redux';
 import { RxCross2 } from "react-icons/rx";
-
+import { useNavigate } from 'react-router-dom';
 function AppointmentList() {
     const user = useSelector(state => state.auth.user_id)
     const [appointments, setAppointments] = useState([])
@@ -11,6 +11,26 @@ function AppointmentList() {
     const [id, setId] = useState(null)
     const [message, setMessage] = useState("")
     const [refresh, setRefresh] = useState(false)
+    const [patient, setPatient] = useState(null)
+    const navigate = useNavigate()
+    function formatTime24to12(timeStr) {
+        const [hour, minute] = timeStr.split(':');
+        const hours = parseInt(hour, 10);
+        const suffix = hours >= 12 ? 'PM' : 'AM';
+        const adjustedHour = hours % 12 || 12;
+        return `${adjustedHour}:${minute} ${suffix}`;
+    }
+    function isToday(date) {
+        const today = new Date();
+        if (!(date instanceof Date)) {
+            date = new Date(date);
+        }
+        return (
+            date.getDate() === today.getDate() &&
+            date.getMonth() === today.getMonth() &&
+            date.getFullYear() === today.getFullYear()
+        )
+    }
     useEffect(() => {
         const fetchAppointments = async () => {
             try {
@@ -28,7 +48,7 @@ function AppointmentList() {
     }, [refresh])
     const handleCancelReq = async () => {
         try {
-            const cancelInfo = { "id": id, "cancelled_by": user, "reason": "Patient Requested" }
+            const cancelInfo = { "id": id, "cancelled_by": user, "reason": "Patient Requested", "patient": patient }
             const response = await adminapi.post("cancel_appointment/", cancelInfo)
             console.log(response)
             setMessage(response.data.message)
@@ -70,6 +90,9 @@ function AppointmentList() {
                                 Slot
                             </th>
                             <th scope="col" className="px-6 py-3">
+                                Consultation Mode
+                            </th>
+                            <th scope="col" className="px-6 py-3">
                                 Payment Status
                             </th>
                             <th scope="col" className="px-6 py-3">
@@ -96,13 +119,21 @@ function AppointmentList() {
                                             {appointment.booked_day}
                                         </td>
                                         <td className="px-6 py-4">
-                                            {appointment.time_slot}
+                                            {formatTime24to12(appointment.time_slot)}
                                         </td>
+                                        < td className="px-6 py-4">
+                                            {
+                                                appointment.consultation_mode === "Online" && isToday(appointment.booked_day) ?
+
+                                                    <p className='text-blue-500 underline' onClick={() => navigate("/onlineRoom")}>Click here for Video Call</p> : appointment.consultation_mode
+
+                                            }</td>
+
                                         <td className="px-6 py-4">
                                             {appointment.payment_status}
                                         </td>
                                         {appointment.booking_status !== "Cancelled" ? (
-                                            <td className="px-6 py-4 hover:underline hover:text-blue-500" onClick={() => { setOpenModal(true); setId(appointment.id) }}>
+                                            <td className="px-6 py-4 hover:underline hover:text-blue-500" onClick={() => { setOpenModal(true); setId(appointment.id); setPatient(appointment.patient) }}>
                                                 Cancel
                                             </td>
                                         ) : <td className="px-6 py-4 ">
@@ -153,7 +184,7 @@ function AppointmentList() {
 
 
 
-        </div>
+        </div >
     )
 }
 

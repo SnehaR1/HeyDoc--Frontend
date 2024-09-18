@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 function CheckOutForm() {
     const user_id = useSelector(state => state.auth.user_id)
     const date = useSelector(state => state.booking.selectedDate)
+    const online = useSelector(state => state.booking.online)
     const slot = useSelector(state => state.booking.selectedSlot)
     const fee = useSelector(state => state.booking.fee)
     const doc_id = useSelector(state => state.booking.doc_id)
@@ -21,6 +22,7 @@ function CheckOutForm() {
     const [patientInfo, setPatientInfo] = useState({ "user": user_id })
     const [paymentMode, setPaymentMode] = useState("")
     const [refresh, setRefresh] = useState(false)
+    const [consultationMode, setConsultationMode] = useState("Offline")
     const navigate = useNavigate()
 
     function convertToDateString(dateString) {
@@ -81,10 +83,10 @@ function CheckOutForm() {
                     const razorpay_payment_id = paymentResponse.razorpay_payment_id
                     const payment_status = "completed"
                     const checkoutInfo =
-                        { "booked_by": user_id, "doctor": doc_id, "time_slot": slot, "booked_day": formattedDate, "amount": fee, "payment_mode": paymentMode, "patient": patientName, "payment_status": payment_status, "razorpay_payment_id": razorpay_payment_id }
+                        { "booked_by": user_id, "doctor": doc_id, "time_slot": slot, "booked_day": formattedDate, "amount": fee, "payment_mode": paymentMode, "patient": patientName, "payment_status": payment_status, "razorpay_payment_id": razorpay_payment_id, "consultation_mode": consultationMode }
                     const response = await api.post("checkout/", checkoutInfo)
                     console.log(response)
-                    navigate("/checkoutSuccess", { state: { data: response.data.data, doctor_name: response.data.doctor_name, payment_mode: response.data.payment_mode, payment_status: response.data.payment_status } })
+                    navigate("/checkoutSuccess", { state: { data: response.data.data, doctor_name: response.data.doctor_name, payment_mode: response.data.payment_mode, payment_status: response.data.payment_status, consultation_mode: response.data.consultation_mode } })
                 } catch (error) {
                     console.log(error)
                 }
@@ -109,12 +111,12 @@ function CheckOutForm() {
                 const formattedDate = convertToDateString(date)
 
                 const checkoutInfo =
-                    { "booked_by": user_id, "doctor": doc_id, "time_slot": slot, "booked_day": formattedDate, "amount": fee, "payment_mode": paymentMode, "patient": patientName, "payment_status": "pending" }
+                    { "booked_by": user_id, "doctor": doc_id, "time_slot": slot, "booked_day": formattedDate, "amount": fee, "payment_mode": paymentMode, "patient": patientName, "payment_status": "pending", "consultation_mode": consultationMode }
 
 
                 const response = await api.post("checkout/", checkoutInfo)
                 console.log(response)
-                navigate("/checkoutSuccess", { state: { data: response.data.data, doctor_name: response.data.doctor_name, payment_mode: response.data.payment_mode, payment_status: response.data.payment_status } })
+                navigate("/checkoutSuccess", { state: { data: response.data.data, doctor_name: response.data.doctor_name, payment_mode: response.data.payment_mode, payment_status: response.data.payment_status, consultation_mode: response.data.consultation_mode } })
 
 
             }
@@ -181,7 +183,6 @@ function CheckOutForm() {
                     </div>
                 </section>
 
-                {/* Modal for registering a patient */}
                 {openModal && (
                     <div className="fixed inset-0 flex justify-center items-center z-50 bg-black bg-opacity-50">
                         <div className="bg-white dark:bg-gray-700 rounded-lg p-6 shadow-lg w-full max-w-md">
@@ -315,29 +316,73 @@ function CheckOutForm() {
 
                 <section className="bg-white shadow-lg rounded-lg p-6 mt-10">
                     <h2 className="text-2xl font-semibold text-center text-gray-700 mb-4">
+                        Mode of Consultation
+                    </h2>
+                    <div className="flex justify-center space-x-8 mb-6">
+                        <div className="flex items-center space-x-2">
+                            <input
+
+                                type="radio"
+                                id="Direct"
+                                name="consultation_mode"
+                                value="Offline"
+                                className="h-4 w-4"
+                                onClick={e => setConsultationMode(e.target.value)}
+                            />
+                            <label
+                                htmlFor="Offline"
+                                className="text-lg font-medium text-gray-800"
+                            >
+                                Offline
+                            </label>
+                        </div>
+                        {
+                            online && <div className="flex items-center space-x-2">
+                                <input
+                                    onClick={e => setConsultationMode(e.target.value)}
+                                    type="radio"
+                                    id="Online"
+                                    name="consultation_mode"
+                                    value="Online"
+                                    className="h-4 w-4"
+                                />
+                                <label
+                                    htmlFor="Online"
+                                    className="text-lg font-medium text-gray-800"
+                                >
+                                    Online
+                                </label>
+                            </div>
+                        }
+
+                    </div>
+                    <h2 className="text-2xl font-semibold text-center text-gray-700 mb-4">
                         Mode of Payment
                     </h2>
 
                     <div className="flex justify-center space-x-8 mb-6">
-                        <div className="flex items-center space-x-2">
-                            <input
-                                onClick={() => {
-                                    setOpenPayButton(false);
-                                    setPaymentMode("Direct");
-                                }}
-                                type="radio"
-                                id="Direct"
-                                name="payment_mode"
-                                value="Direct"
-                                className="h-4 w-4"
-                            />
-                            <label
-                                htmlFor="Direct"
-                                className="text-lg font-medium text-gray-800"
-                            >
-                                Direct
-                            </label>
-                        </div>
+                        {
+                            consultationMode == "Offline" && <div className="flex items-center space-x-2">
+                                <input
+                                    onClick={() => {
+                                        setOpenPayButton(false);
+                                        setPaymentMode("Direct");
+                                    }}
+                                    type="radio"
+                                    id="Direct"
+                                    name="payment_mode"
+                                    value="Direct"
+                                    className="h-4 w-4"
+                                />
+                                <label
+                                    htmlFor="Direct"
+                                    className="text-lg font-medium text-gray-800"
+                                >
+                                    Direct
+                                </label>
+                            </div>
+                        }
+
                         <div className="flex items-center space-x-2">
                             <input
                                 onClick={() => {

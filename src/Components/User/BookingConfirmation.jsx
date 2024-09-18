@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 function BookingConfirmation() {
     const location = useLocation()
-    const { data, doctor_name, payment_mode, payment_status } = location.state || {};
+    const { data, doctor_name, payment_mode, payment_status, consultation_mode } = location.state || {};
     const navigate = useNavigate()
 
 
@@ -20,6 +20,7 @@ function BookingConfirmation() {
                     <p className="text-lg text-gray-700"><span className="font-semibold">Booked Time: </span> {data["time_slot"]}</p>
                     <p className="text-lg text-gray-700"><span className="font-semibold">Amount: </span>₹{data["amount"]}</p>
                     <p className="text-lg text-gray-700"><span className="font-semibold">Doctor: </span> {doctor_name}</p>
+                    <p className="text-lg text-gray-700"><span className="font-semibold">Consultaion Mode: </span> {consultation_mode}</p>
                     <p className="text-lg text-gray-700"><span className="font-semibold">Payment Mode: </span> {payment_mode}</p>
                     <p className="text-lg text-gray-700"><span className="font-semibold">Payment Status: </span> {payment_status}</p>
                     {data["razorpay_payment_id"] ? <p className="text-lg text-gray-700"><span className="font-semibold">Razor Payment ID: </span> {data["razorpay_payment_id"]}</p> : <></>}

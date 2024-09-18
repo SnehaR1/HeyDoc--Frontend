@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { useLocation } from 'react-router-dom';
+
 import NavBar from './NavBar';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -18,25 +18,51 @@ const formatTime = (timeStr) => {
 
 const BookingForm = () => {
     const availability = useSelector(state => state.booking.availability)
-    const slots = useSelector(state => state.booking.slots)
+    const booked_slots = useSelector(state => state.booking.slots)
+    console.log(booked_slots)
+    const morning_slots = useSelector(state => state.booking.morning_slots)
+    const evening_slots = useSelector(state => state.booking.evening_slots)
+
     const time_slot = useSelector(state => state.booking.timeSlot)
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    console.log(`monring_slots ${morning_slots}`)
+    console.log(`evening_slots ${evening_slots}`)
+    console.log(`booked_slots ${booked_slots}`)
 
 
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedSlot, setSelectedSlot] = useState(null);
     const [filteredSlots, setFilteredSlots] = useState([]);
     const [isAvailable, setIsAvailable] = useState(false);
+    const [online, setOnline] = useState(false);
     const [selectedDay, setSelectedDay] = useState(null)
+    const formatDate = (date) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+    const formatTime = (timeStr) => {
+
+        const [hours, minutes] = timeStr.split(':');
+        const date = new Date();
+        date.setHours(parseInt(hours, 10));
+        date.setMinutes(parseInt(minutes, 10));
+        return date.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true });
+    };
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
+
         const currentDate = new Date();
         currentDate.setHours(0, 0, 0, 0);
 
         const selectedDate = new Date(date);
         selectedDate.setHours(0, 0, 0, 0);
+
+        const formattedSelectedDate = formatDate(selectedDate);
+        console.log("Selected Date:", formattedSelectedDate);
 
         if (selectedDate <= currentDate) {
             setIsAvailable(false);
@@ -44,18 +70,35 @@ const BookingForm = () => {
             return;
         }
 
-
-        const dayOfWeek = date.getDay();
+        const dayOfWeek = new Date(date).getDay();
         const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         const selectedDayName = dayNames[dayOfWeek];
-        setSelectedDay(selectedDayName)
+        setSelectedDay(selectedDayName);
 
 
         const dayAvailability = availability.find(avail => avail.day_of_week === selectedDayName);
 
-        if (dayAvailability && dayAvailability.isAvailable) {
-            setIsAvailable(true);
-            setFilteredSlots(slots);
+
+        let slots = [];
+        if (dayAvailability) {
+            if (dayAvailability.slot === "Morning") {
+                slots = morning_slots;
+            } else if (dayAvailability.slot === "Evening") {
+                slots = evening_slots;
+            }
+
+            const bookedSlotsForDate = booked_slots[formattedSelectedDate] || [];
+
+            if (dayAvailability.isAvailable) {
+                const filteredslots = slots.filter(slot => !bookedSlotsForDate.includes(slot));
+                console.log("Filtered Slots:", filteredslots);
+                setFilteredSlots(filteredslots);
+                setIsAvailable(dayAvailability.isAvailable || false);
+                setOnline(dayAvailability.online_consultation || false);
+            } else {
+                setIsAvailable(false);
+                setFilteredSlots([]);
+            }
         } else {
             setIsAvailable(false);
             setFilteredSlots([]);
@@ -107,7 +150,7 @@ const BookingForm = () => {
                 ) : (
                     <p className="text-red-500">Slots are not available for the selected day.</p>
                 )}
-                <button class="w-half mx-auto mt-4 rounded-xl bg-blue-600 px-6 py-3 text-xl font-medium text-white" onClick={() => { if (selectedDate && selectedSlot) { dispatch(addSlotandDate({ selectedDate, selectedSlot })); navigate("/checkoutForm") } else { alert("Select a day and slot") } }}>Proceed</button>
+                <button class="w-half mx-auto mt-4 rounded-xl bg-blue-600 px-6 py-3 text-xl font-medium text-white" onClick={() => { if (selectedDate && selectedSlot) { dispatch(addSlotandDate({ selectedDate, selectedSlot, online })); navigate("/checkoutForm") } else { alert("Select a day and slot") } }}>Proceed</button>
             </div>
 
         </div>
@@ -116,3 +159,6 @@ const BookingForm = () => {
 };
 
 export default BookingForm;
+
+
+

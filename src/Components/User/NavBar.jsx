@@ -29,7 +29,7 @@ function NavBar() {
         <div className='bg-white flex flex-row justify-around shadow-md mt-6 items-center'>
             <h1 className='text-blue-600 font-bold text-3xl mb-3 '>HeyDoc</h1>
             <div className='flex flex-row p-3 items-center mb-3'>
-                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">Home</p>
+                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/")}>Home</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500 flex flex-row">Departments</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/doctors")}>Doctors</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/blogs")}>Blogs</p>

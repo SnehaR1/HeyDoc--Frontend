@@ -13,6 +13,7 @@ function Schedule() {
     const [refresh, setRefresh] = useState(false)
     const [scheduledDays, setScheduledDays] = useState([])
     const [scheduledInfo, setScheduledInfo] = useState({})
+    const [scheduledOnline, setScheduledOnline] = useState({})
     const [day, setDay] = useState("")
     const [selectedSlot, setSelectedSlot] = useState("")
     const [notAvailable, setNotavailable] = useState(false)
@@ -21,6 +22,8 @@ function Schedule() {
     const [eveningSlots, setEveningSlots] = useState([])
     const [openModal, setOpenModal] = useState(false)
     const [editSlot, setEditSlot] = useState("")
+    const [online, setOnline] = useState(false)
+
     useEffect(() => {
         const fetchChoices = async () => {
             try {
@@ -33,14 +36,22 @@ function Schedule() {
                 } else {
                     const scheduled_days = []
                     const schedulded_info = {}
+                    const onlineAvailability = {}
                     response.data.availability.forEach(item => {
                         if (item["day_of_week"]) {
                             scheduled_days.push(item["day_of_week"]);
-                            schedulded_info[item["day_of_week"]] = item["slot"]
+                            schedulded_info[item["day_of_week"]] = item["slot"];
+                            onlineAvailability[item["day_of_week"]] = item["online_consultation"]
+                            setOnline(item["online_consultation"])
                         }
                     })
                     setScheduledDays(scheduled_days)
                     setScheduledInfo(schedulded_info)
+                    setScheduledOnline(onlineAvailability)
+
+
+
+
 
                 }
             } catch (error) {
@@ -79,12 +90,13 @@ function Schedule() {
             const scheduleToSubmit = {
                 day_of_week: day,
                 slot: notAvailable ? null : slotValue,
-                isAvailable: notAvailable ? "false" : "true"
+                isAvailable: notAvailable ? "false" : "true",
+                online_consultation: online ? "true" : "false"
             };
 
             console.log("Submitting schedule:", scheduleToSubmit);
 
-            await doctorapi.post(`schedule/${doc_id}`, scheduleToSubmit);
+            await doctorapi.post(`schedule/${doc_id}/`, scheduleToSubmit);
 
             setRefresh(!refresh);
             setDay("");
@@ -98,7 +110,7 @@ function Schedule() {
     const handleEditSlot = async (e) => {
         e.preventDefault();
         try {
-            const info = { "day": day, "slot": editSlot }
+            const info = { "day": day, "slot": editSlot, "online_consultation": online }
 
             const response = await doctorapi.patch(`schedule/${doc_id}/`, info)
             console.log(response)
@@ -160,12 +172,16 @@ function Schedule() {
                             <input checked={notAvailable} onChange={(e) => { setNotavailable(e.target.checked) }} name="notAvailable" id="inline-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                             <label htmlFor="isAvailable" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Not Available</label>
                         </div>
+                        <div className="flex justify-center items-center my-6">
+                            <input checked={online} onChange={(e) => { setOnline(e.target.checked) }} name="online" id="inline-checkbox" type="checkbox" value="" className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                            <label htmlFor="online" className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Available for Online Consultation? </label>
+                        </div>
 
                         <button type="submit" className="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm py-3 px-5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add</button>
                     </form>
                 </div>
             ) : (
-                <div className="inline-flex rounded-md shadow-sm mt-12" role="group">
+                <div className="inline-flex rounded-md shadow-sm mt-4" role="group">
                     <div className="bg-white shadow-2xl rounded-lg px-8 pt-6 pb-8">
                         <h1 className='text-2xl font-bold'>Schedule</h1>
                         <div className="inline-flex rounded-md shadow-sm mt-4" role="group">
@@ -197,7 +213,7 @@ function Schedule() {
                         </div>
                         <p className='mt-4'>Scheduled Slot: {selectedSlot || "Select a day"}</p>
 
-                        {selectedSlot === "Morning" ? <div className="flex flex-col  items-center justify-center flex-wrap gap-2 mt-4">
+                        {selectedSlot === "Morning" ? <div className="flex flex-col  items-center justify-center flex-wrap gap-2 mt-2">
                             <p className="text-lg font-semibold text-gray-600 mb-2"></p>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 mt-4">
                                 {morningSlots.map((timeSlot, index) => (
@@ -218,7 +234,7 @@ function Schedule() {
 
                         </div> : selectedSlot === "Evening" ? <div className="flex flex-col  items-center justify-center flex-wrap gap-2 mt-4">
                             <p className="text-lg font-semibold text-gray-600 mb-2"></p>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 mt-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2 mt-2">
                                 {eveningSlots.map((timeSlot, index) => (
                                     <div
                                         key={index}
@@ -236,6 +252,8 @@ function Schedule() {
 
 
                         </div> : <></>}
+                        <p className='my-3'>Available For Online Consultation : {day && scheduledOnline[day] ? "Yes" : "Not Available"}</p>
+
                         <button className='bg-blue-500 text-white font-bold py-4 px-6 rounded-md hove:bg-blue-900 mt-3' onClick={() => setOpenModal(true)}>Edit</button>
                     </div>
                 </div>
@@ -268,6 +286,11 @@ function Schedule() {
                                         <option value="Not Available">Not Available</option>
 
                                     </select>
+                                    <div className='flex flex-row justify-around'>
+
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Available For Online Consultation?</label>
+                                        <input checked={online ? true : false} onClick={e => setOnline(e.target.checked)} type="checkbox" />
+                                    </div>
 
                                     <button type="submit" className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Update</button>
 

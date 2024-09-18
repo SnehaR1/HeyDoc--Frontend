@@ -8,6 +8,12 @@ const initialState = {
     fee: null,
     selectedDate: null,
     selectedSlot: null,
+    online: null,
+    evening_slots: null,
+    morning_slots: null,
+    days_available: null,
+
+
 
 
 }
@@ -22,11 +28,16 @@ const bookingSlice = createSlice({
             state.time_slot = action.payload.time_slot;
             state.doc_id = action.payload.doc_id;
             state.fee = action.payload.fee;
+            state.evening_slots = action.payload.evening_slots;
+            state.morning_slots = action.payload.morning_slots;
+            state.days_available = action.payload.days_available;
+
 
         },
         addSlotandDate(state, action) {
             state.selectedDate = action.payload.selectedDate;
             state.selectedSlot = action.payload.selectedSlot;
+            state.online = action.payload.online;
         }
         ,
         clearBookingDetails(state) {
@@ -37,6 +48,10 @@ const bookingSlice = createSlice({
             state.fee = null;
             state.selectedDate = null;
             state.selectedSlot = null;
+            state.online = null;
+            state.evening_slots = null;
+            state.morning_slots = null;
+            state.days_available = null;
         }
     }
 })

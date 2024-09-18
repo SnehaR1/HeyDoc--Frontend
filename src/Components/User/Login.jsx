@@ -21,6 +21,7 @@ function Login() {
     const [info, setInfo] = useState({})
     const [showPass, setShowpass] = useState(false)
     const [resetPass, setResetPass] = useState(false)
+    const [error, setError] = useState("")
 
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -35,6 +36,7 @@ function Login() {
 
             const response = await api.post("login/", info)
             console.log(response)
+            setError("")
 
             const email = response.data.data["email"]
             const phone = response.data.data["phone"]
@@ -54,7 +56,9 @@ function Login() {
             navigate("/")
 
         } catch (error) {
-            console.log(error)
+            setError("Invalid Email or Password!")
+
+
         }
 
 
@@ -65,7 +69,13 @@ function Login() {
             {
                 resetPass ? <ForgotPassword /> : <div className="max-w-xl mx-auto px-6 py-8 bg-white shadow-md rounded-md">
                     <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">Sign In</h1>
+
                     <form className="space-y-4 " onSubmit={handleSubmit} >
+                        {
+                            error && <div className="block w-full md:w-96 mx-auto"><div className="p-3 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                                <span className="font-medium">{error}</span>
+                            </div></div>
+                        }
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Email</label>
                             <input onChange={(e) => setInfo({ ...info, [e.target.name]: e.target.value })} type="email" name="email" className="my-3 block w-full md:w-96 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary p-3" placeholder="Enter your Email" required />
