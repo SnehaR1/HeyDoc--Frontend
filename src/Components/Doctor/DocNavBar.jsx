@@ -27,8 +27,7 @@ function DocNavBar() {
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/doctorHome")}>Dashboard</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500 flex flex-row" onClick={() => navigate("/schedule")}>Schedule</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/docPatients")}>Patients</p>
-                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">Messages</p>
-                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">Requests</p>
+
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">Appointments</p>
 
 
@@ -53,7 +52,8 @@ function DocNavBar() {
 
 
                                 <li>
-
+                                    <p className="block px-4 py-2 hover:bg-gray-100 font-semibold" onClick={(() => navigate("/docProfile"))}>Profile</p>
+                                    <p className="block px-4 py-2 hover:bg-gray-100 font-semibold" onClick={(() => navigate("/leaveApplication"))}>Apply For Leave</p>
                                     <p className="block px-4 py-2 hover:bg-gray-100 font-semibold" onClick={handleLogout}>Log Out</p>
                                 </li>
 

@@ -37,9 +37,9 @@ function DoctorLogin() {
             const doc_image = response.data.data["doc_image"]
             const is_HOD = response.data.data["is_HOD"]
             const role = "doctor"
-            const deparment = response.data.data["department"]
+            const department = response.data.data["department"]
             const doc_id = response.data.data["doc_id"]
-            dispatch(docLogin({ name, email, phone, doc_image, is_HOD, role, deparment, doc_id }))
+            dispatch(docLogin({ name, email, phone, doc_image, is_HOD, role, department, doc_id }))
 
             navigate("/doctorHome")
 

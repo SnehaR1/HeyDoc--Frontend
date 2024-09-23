@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import DocNavBar from './DocNavBar'
 import { doctorapi } from '../../api'
 import { useSelector } from 'react-redux'
-
+import { useNavigate } from 'react-router-dom'
 function DocPatients() {
     const [patients, setPatients] = useState([])
     const [filterPatients, setFilterPatients] = useState([])
@@ -10,6 +10,7 @@ function DocPatients() {
 
     const doc_id = useSelector(state => state.doctorauth.doc_id)
     const [searchPatient, setSearchPatient] = useState(null)
+    const navigate = useNavigate()
     useEffect(() => {
         const fetchPatients = async () => {
             try {
@@ -106,6 +107,9 @@ function DocPatients() {
                                 <th scope="col" className="px-6 py-3">
                                     Last Appointment Date
                                 </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Reports
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -127,6 +131,12 @@ function DocPatients() {
                                         </td>
                                         <td className="px-6 py-4">
                                             {patient.last_appointment}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <span className='text-blue-500 underline' onClick={() => {
+                                                navigate("/patientReports", { state: { patient: patient.id } });
+                                            }}
+                                            >Reports</span>
                                         </td>
                                     </tr>
                                 ))

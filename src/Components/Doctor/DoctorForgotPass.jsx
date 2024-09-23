@@ -1,5 +1,5 @@
 
-import DocNavBar from './DocNavBar'
+
 import React, { useState } from 'react';
 
 import { otpVerified, userConfirmation } from '../../auth/resetPassSlice';

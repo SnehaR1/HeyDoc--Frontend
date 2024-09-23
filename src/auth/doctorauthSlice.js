@@ -28,6 +28,14 @@ const doctorauthSlice = createSlice({
             state.role = action.payload.role;
             state.doc_id = action.payload.doc_id
         },
+        updateDoc(state, action) {
+            state.name = action.payload.name;
+            state.phone = action.payload.phone;
+            state.email = action.payload.email;
+            state.department = action.payload.department;
+            state.is_HOD = action.payload.is_HOD;
+            state.doc_image = action.payload.doc_image;
+        },
 
         docLogout(state) {
             state.isAuthenticated = false;
@@ -43,5 +51,5 @@ const doctorauthSlice = createSlice({
         }
     }
 })
-export const { docLogin, docLogout } = doctorauthSlice.actions;
+export const { docLogin, updateDoc, docLogout } = doctorauthSlice.actions;
 export default doctorauthSlice.reducer;
