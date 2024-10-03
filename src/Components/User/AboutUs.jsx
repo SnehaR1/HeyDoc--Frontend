@@ -5,6 +5,7 @@ import doctor1 from '../../Images/doctor1.jpg';
 import doctor2 from '../../Images/doctor2.jpg';
 import doctor3 from '../../Images/doctor3.jpg';
 import doctor4 from '../../Images/doctor4.jpg';
+import Footer from './Footer';
 function AboutUs() {
     return (
         <div><NavBar />
@@ -51,7 +52,9 @@ function AboutUs() {
                         </div>
                     </div>
                 </div>
-            </div></div>
+            </div>
+            <Footer />
+        </div>
     )
 }
 

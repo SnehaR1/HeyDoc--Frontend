@@ -10,6 +10,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from '../../auth/authslice';
 import { FaMicroblog } from "react-icons/fa";
 import { FaBook } from "react-icons/fa";
+import { MdDashboard } from "react-icons/md";
 function AdminNavBar() {
     const [isOpen, setOpen] = useState(false)
     const username = useSelector(state => state.auth.username)
@@ -33,6 +34,7 @@ function AdminNavBar() {
         <div> <div className='bg-white flex flex-row justify-around shadow-md mt-6 items-center'>
             <h1 className='text-blue-600 font-bold text-3xl mb-3 '>HeyAdmin</h1>
             <div className='flex flex-row p-3 items-center mb-3'>
+                <p onClick={() => navigate('/adminDashBoard')} className="px-4 flex justify-center   hover:text-blue-500 " >< MdDashboard className='w-6 h-6 mr-2' />DashBoard</p>
                 <p onClick={() => navigate('/adminUsers')} className="px-4 flex justify-center   hover:text-blue-500 " ><HiUsers className='w-6 h-6 mr-2' />Users</p>
                 <p onClick={() => navigate('/adminDepartment')} className="px-4  flex justify-center   hover:text-blue-500 " ><TbCategoryFilled className='w-6 h-6 mr-2' />Departments</p>
                 <p onClick={() => navigate("/adminDoctor")} className="px-4  flex justify-center   hover:text-blue-500 " ><FaUserDoctor className='w-6 h-6 mr-2' />Doctors</p>
@@ -50,7 +52,7 @@ function AdminNavBar() {
 
 
                             <li>
-
+                                <p className="block px-4 py-2 hover:bg-gray-100 font-semibold" onClick={() => navigate("/")}>User Side</p>
 
                                 <p className="block px-4 py-2 hover:bg-gray-100 font-semibold" onClick={() => navigate("/requests")}>Requests</p>
                                 <p className="block px-4 py-2 hover:bg-gray-100 font-semibold" onClick={handleLogout} >Log Out</p>

@@ -1,14 +1,11 @@
 import React, { useRef } from 'react'
 import NavBar from './NavBar'
-import { useLocation, useNavigate } from 'react-router-dom'
-import Footer from './Footer';
+import { useLocation } from 'react-router-dom'
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-
-function BookingConfirmation() {
-    const location = useLocation()
-    const { data, doctor_name, payment_mode, payment_status, consultation_mode } = location.state || {};
-    const navigate = useNavigate()
+function RecieptView() {
+    const { state } = useLocation()
+    const { reciept } = state || {}
     const pdfRef = useRef();
 
 
@@ -49,66 +46,56 @@ function BookingConfirmation() {
     return (
         <div>
             <NavBar />
-            {/* <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg overflow-hidden p-6 mt-5">
-                <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">Appointment Receipt</h2>
-                <div className="space-y-4">
-                    <p className="text-lg text-gray-700"><span className="font-semibold">Booked By: </span> </p>
-                    <p className="text-lg text-gray-700"><span className="font-semibold">Booked Day: </span> </p>
-                    <p className="text-lg text-gray-700"><span className="font-semibold">Booked Time: </span> }</p>
-                    <p className="text-lg text-gray-700"><span className="font-semibold">Amount: </span></p>
-                    <p className="text-lg text-gray-700"><span className="font-semibold">Doctor: </span></p>
-                    <p className="text-lg text-gray-700"><span className="font-semibold">Consultaion Mode: </span> </p>
-                    <p className="text-lg text-gray-700"><span className="font-semibold">Payment Mode: </span> </p>
-                    <p className="text-lg text-gray-700"><span className="font-semibold">Payment Status: </span> </p>
-                    { <p className="text-lg text-gray-700"><span className="font-semibold">Razor Payment ID: </span> </p> : <></>}
-                </div>
-             
-            </div> */}
+
             <div ref={pdfRef} className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6 border border-gray-200 my-6 ">
                 <h2 className="text-xl font-bold text-blue-700 mb-4 text-center">Appointment Receipt</h2>
                 <div className="space-y-4  p-3">
                     <div className='flex flex-row justify-between'>
                         <p className="text-lg text-gray-700 font-semibold ">Patient:</p>
-                        <p className="text-md text-gray-600 ml-4"> {data["patient"]}</p>
+                        <p className="text-md text-gray-600 ml-4"> {reciept["patient"]}</p>
                     </div>
                     <div className='flex flex-row justify-between'>
                         <p className="text-lg text-gray-700 font-semibold ">Booked Day:</p>
-                        <p className="text-md text-gray-600 ml-4"> {data["booked_day"]}</p>
+                        <p className="text-md text-gray-600 ml-4"> {reciept["booked_day"]}</p>
                     </div>
                     <div className='flex flex-row justify-between'>
                         <p className="text-lg text-gray-700 font-semibold ">Booked Time:</p>
-                        <p className="text-md text-gray-600 ml-4"> {data["time_slot"]}</p>
+                        <p className="text-md text-gray-600 ml-4"> {reciept["time_slot"]}</p>
                     </div>
                     <div className='flex flex-row justify-between'>
                         <p className="text-lg text-gray-700 font-semibold ">Amount:</p>
-                        <p className="text-md text-gray-600 ml-4"> ₹{data["amount"]}</p>
+                        <p className="text-md text-gray-600 ml-4"> ₹{reciept["amount"]}</p>
                     </div>
                     <div className='flex flex-row justify-between'>
                         <p className="text-lg text-gray-700 font-semibold ">Doctor:</p>
-                        <p className="text-md text-gray-600 ml-4"> Dr  {doctor_name}</p>
+                        <p className="text-md text-gray-600 ml-4"> Dr {reciept.doctor.name}</p>
                     </div>
                     <div className='flex flex-row justify-between'>
                         <p className="text-lg text-gray-700 font-semibold ">Consultaion Mode:</p>
-                        <p className="text-md text-gray-600 ml-4">{consultation_mode}</p>
+                        <p className="text-md text-gray-600 ml-4"> {reciept["consultation_mode"]}</p>
                     </div>
                     <div className='flex flex-row justify-between'>
                         <p className="text-lg text-gray-700 font-semibold ">Payment Mode: </p>
-                        <p className="text-md text-gray-600 ml-4"> {payment_mode}</p>
+                        <p className="text-md text-gray-600 ml-4">  {reciept["payment_mode"]}</p>
                     </div>
                     <div className='flex flex-row justify-between'>
                         <p className="text-lg text-gray-700 font-semibold ">Payment Status: </p>
-                        <p className="text-md text-gray-600 ml-4">{payment_status}</p>
+                        <p className="text-md text-gray-600 ml-4"> {reciept["payment_status"]}</p>
                     </div>
-                    {data["razorpay_payment_id"] &&
+                    {reciept["razorpay_payment_id"] &&
                         <div className='flex flex-row justify-between'>
                             <p className="text-lg text-gray-700 font-semibold ">Razor Payment ID:</p>
-                            <p className="text-md text-gray-600 ml-4">  {data["razorpay_payment_id"]}</p>
+                            <p className="text-md text-gray-600 ml-4">  {reciept["razorpay_payment_id"]}</p>
                         </div>}
 
-                    <div className="border-t mt-6 pt-4 text-center">
-                        <p className="text-sm text-gray-500">Thank you for your booking!<span onClick={() => navigate("/")}>Go Home</span></p>
 
-                    </div>
+
+
+
+
+
+
+
                 </div>
 
             </div>
@@ -118,10 +105,10 @@ function BookingConfirmation() {
                     Download PDF
                 </button>
             </div>
-
-            <Footer />
         </div>
+
+
     )
 }
 
-export default BookingConfirmation
+export default RecieptView

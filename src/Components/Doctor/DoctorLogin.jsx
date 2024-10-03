@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { docLogin } from '../../auth/doctorauthSlice';
 import { useNavigate } from 'react-router-dom';
 import DoctorForgotPass from './DoctorForgotPass';
-
+import Cookies from 'js-cookie';
 function DoctorLogin() {
     const [openReqForm, setOpenReqForm] = useState(false)
     const [reqInfo, setReqInfo] = useState({})
@@ -30,15 +30,20 @@ function DoctorLogin() {
                 }
             }
             const response = await doctorapi.post("login/", loginInfo)
+            localStorage.clear();
+            localStorage.setItem('access_token', response.data.data.access);
+            localStorage.setItem('refresh_token', response.data.data.refresh);
             console.log(response)
-            const name = response.data.data["name"]
-            const email = response.data.data["email"]
-            const phone = response.data.data["phone"]
-            const doc_image = response.data.data["doc_image"]
-            const is_HOD = response.data.data["is_HOD"]
+            const name = response.data.data.user["name"]
+            const email = response.data.data.user["email"]
+            const phone = response.data.data.user["phone"]
+            const doc_image = response.data.data.user["doc_image"]
+            const is_HOD = response.data.data.user["is_HOD"]
             const role = "doctor"
-            const department = response.data.data["department"]
-            const doc_id = response.data.data["doc_id"]
+            const department = response.data.data.user["department"]
+            const doc_id = response.data.data.user["doc_id"]
+
+
             dispatch(docLogin({ name, email, phone, doc_image, is_HOD, role, department, doc_id }))
 
             navigate("/doctorHome")

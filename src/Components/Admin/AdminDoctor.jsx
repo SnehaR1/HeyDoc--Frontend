@@ -12,7 +12,10 @@ function AdminDoctor() {
     const [isActive, setIsActive] = useState(false)
     const [docId, setDocId] = useState(null)
     const navigate = useNavigate()
-
+    const truncateText = (text, wordLimit) => {
+        const words = text.split(" ");
+        return words.length > wordLimit ? words.slice(0, wordLimit).join(" ") + "..." : text;
+    }
     useEffect(() => {
         const fetchDoctors = async () => {
             try {
@@ -72,6 +75,7 @@ function AdminDoctor() {
                             <th scope="col" className="px-6 py-3">
                                 Account
                             </th>
+
                             <th scope="col" className="px-6 py-3">
                                 fee
                             </th>
@@ -105,7 +109,7 @@ function AdminDoctor() {
                                     {doc.department}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {doc.description}
+                                    {truncateText(doc.description, 3)}
                                 </td>
                                 {doc.account_activated ?
                                     <td className="px-6 py-4">
@@ -115,6 +119,7 @@ function AdminDoctor() {
                                     </td>
 
                                 }
+
 
                                 <td className="px-6 py-4">
                                     ₹{doc.fee}

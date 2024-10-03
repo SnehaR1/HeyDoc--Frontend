@@ -10,7 +10,7 @@ function DocNavBar() {
     const dispatch = useDispatch()
     const handleLogout = async () => {
         try {
-            const response = doctorapi.post("logout/", { withCredentials: true })
+            const response = doctorapi.post("logout/", { refresh_token: localStorage.getItem('refresh_token') }, { withCredentials: true })
             console.log(response)
             dispatch(docLogout())
             navigate("/doctorLogin")
@@ -28,7 +28,7 @@ function DocNavBar() {
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500 flex flex-row" onClick={() => navigate("/schedule")}>Schedule</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/docPatients")}>Patients</p>
 
-                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500">Appointments</p>
+                <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/appointments")}>Appointments</p>
 
 
 

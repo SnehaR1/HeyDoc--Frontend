@@ -36,20 +36,25 @@ function Login() {
 
             const response = await api.post("login/", info)
             console.log(response)
+            localStorage.clear();
+            localStorage.setItem('access_token', response.data.data.access);
+            localStorage.setItem('refresh_token', response.data.data.refresh);
+            api.defaults.headers.common['Authorization'] =
+                `Bearer ${response.data.data['access']}`;
             setError("")
 
-            const email = response.data.data["email"]
-            const phone = response.data.data["phone"]
-            const username = response.data.data["username"]
+            const email = response.data.data.user["email"]
+            const phone = response.data.data.user["phone"]
+            const username = response.data.data.user["username"]
             let role;
-            if (response.data.data["is_staff"]) {
+            if (response.data.data.user["is_staff"]) {
 
                 role = "admin"
             } else {
                 role = "user"
             }
-            const is_staff = response.data.data["is_staff"]
-            const user_id = response.data.data["user_id"]
+            const is_staff = response.data.data.user["is_staff"]
+            const user_id = response.data.data.user["user_id"]
             console.log(is_staff)
             dispatch(login({ email, phone, username, role, is_staff, user_id }))
 

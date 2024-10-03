@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { addSlotandDate } from '../../booking/bookingSlice';
+import Footer from './Footer';
 const formatTime = (timeStr) => {
 
     const [hours, minutes] = timeStr.split(':');
@@ -152,7 +153,7 @@ const BookingForm = () => {
                 )}
                 <button class="w-half mx-auto mt-4 rounded-xl bg-blue-600 px-6 py-3 text-xl font-medium text-white" onClick={() => { if (selectedDate && selectedSlot) { dispatch(addSlotandDate({ selectedDate, selectedSlot, online })); navigate("/checkoutForm") } else { alert("Select a day and slot") } }}>Proceed</button>
             </div>
-
+            <Footer />
         </div>
 
     );

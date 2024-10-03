@@ -4,6 +4,7 @@ import { api } from '../../api'
 import { useNavigate } from 'react-router-dom'
 import { addBookingDetails } from '../../booking/bookingSlice'
 import { useDispatch } from 'react-redux'
+import Footer from './Footer'
 function Doctors() {
     const [doctors, setDoctors] = useState([])
     const [allDoctors, setAllDoctors] = useState([]);
@@ -173,7 +174,7 @@ function Doctors() {
 
             </section>
 
-
+            <Footer />
         </div>
 
 

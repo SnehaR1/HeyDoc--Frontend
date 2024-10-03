@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import NavBar from './NavBar'
 import { adminapi } from '../../api';
 import { useNavigate } from 'react-router-dom';
+import Footer from './Footer';
 function Blogs() {
     const [blogs, setBlogs] = useState([])
     const navigate = useNavigate()
@@ -45,7 +46,7 @@ function Blogs() {
 
                 </div>
             </section>
-
+            <Footer />
         </div>
     )
 }

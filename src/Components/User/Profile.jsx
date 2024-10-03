@@ -4,6 +4,8 @@ import { api } from '../../api'
 import { useSelector } from 'react-redux'
 import { MdOutlineModeEdit } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
+import { useNavigate } from 'react-router-dom';
+import Footer from './Footer';
 function Profile() {
   const [patients, setPatients] = useState([])
   const [openModal, setOpenModal] = useState(false)
@@ -16,6 +18,7 @@ function Profile() {
   const [message, setMessage] = useState("")
   const [editProfile, setEditProfile] = useState(false)
   const [editMessage, setEditMessage] = useState("")
+  const navigate = useNavigate()
   useEffect(() => {
     const fetchPatients = async () => {
       try {
@@ -80,21 +83,32 @@ function Profile() {
             <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
             <input onChange={(e) => setUserInfo({ ...userInfo, [e.target.name]: e.target.value })} name='phone' value={userInfo.phone} type="text" id="phone" className="profileEdit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your Phone Number" />
           </div>
-          <button
-            type="submit"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          <div className='flex flex-row justify-center'>
+            <button
+              type="button"
+              className="mx-3 p-6 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              onClick={() => {
+                setEditProfile(false);
+              }}
+            >
+              Back
+            </button>
+            <button
+              type="submit"
+              className="text-white mx-3 p-6  bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
 
-          >
-            Update
-          </button>
+            >
+              Update
+            </button>
+          </div>
         </form>
           :
           <form className="max-w-md mx-auto shadow-lg p-5 my-3">
             <h4 className='flex justify-center text-2xl font-bold text-blue-700 my-4'>PROFILE</h4>
             {
               editMessage ?
-                <div class="p-4 mb-4 flex justify-between text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 w-3/4 md:w-1/2 mx-auto" role="alert">
-                  <span class="font-medium">{editMessage}</span>
+                <div className="p-4 mb-4 flex justify-between text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 w-3/4 md:w-1/2 mx-auto" role="alert">
+                  <span className="font-medium">{editMessage}</span>
                   <RxCross2 onClick={setEditMessage("")} />
                 </div> : <></>
 
@@ -107,15 +121,18 @@ function Profile() {
               <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
               <input name='phone' value={userInfo.phone} type="text" id="phone" className="profileEdit bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter your Phone Number" readOnly />
             </div>
+
             <button
               type="button"
-              className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              className=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               onClick={() => {
                 setEditProfile(true);
               }}
             >
               Edit
-            </button></form>
+            </button>
+
+          </form>
 
 
 
@@ -131,11 +148,11 @@ function Profile() {
         <div>
 
 
-          <div class="relative overflow-x-hidden">
+          <div className="relative overflow-x-hidden">
             {
               message ?
-                <div class="p-4 mb-4 flex justify-between text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 w-3/4 md:w-1/2 mx-auto" role="alert">
-                  <span class="font-medium">{message}</span>
+                <div className="p-4 mb-4 flex justify-between text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 w-3/4 md:w-1/2 mx-auto" role="alert">
+                  <span className="font-medium">{message}</span>
                   <RxCross2 onClick={setMessage("")} />
                 </div> : <></>
 
@@ -145,20 +162,23 @@ function Profile() {
 
 
 
-                <table class="w-full text-sm text-left rtl:text-right mx-24 my-3  text-gray-500 dark:text-gray-400">
-                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <table className="w-full text-sm text-left rtl:text-right mx-24 my-3  text-gray-500 dark:text-gray-400">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th scope="col" class="px-6 py-3">
+                      <th scope="col" className="px-6 py-3">
                         Name
                       </th>
 
-                      <th scope="col" class="px-6 py-3">
+                      <th scope="col" className="px-6 py-3">
                         Phone
                       </th>
-                      <th scope="col" class="px-6 py-3">
+                      <th scope="col" className="px-6 py-3">
+                        Active
+                      </th>
+                      <th scope="col" className="px-6 py-3">
                         Report
                       </th>
-                      <th scope="col" class="px-6 py-3">
+                      <th scope="col" className="px-6 py-3">
                         Edit
                       </th>
 
@@ -169,20 +189,24 @@ function Profile() {
                       patients.map((patient, key) => (
 
 
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <tr key={key} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                          <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {patient.name}
                           </th>
-                          <td class="px-6 py-4">
+                          <td className="px-6 py-4">
                             {patient.phone}
                           </td>
+                          <td className="px-6 py-4">
+                            {patient.is_active ? <span className='text-green-500'>Active</span> : <span className='text-red-600'>Not Active</span>}
+                          </td>
 
-                          <td class="px-6 py-4">
+                          <td className="px-6 py-4 text-blue-600 underline" onClick={() => navigate("/reports", { state: { name: patient.name, age: patient.age, gender: patient.gender } })}>
                             Click Here
                           </td>
-                          <td class="px-6 py-4">
+                          <td className="px-6 py-4">
                             <MdOutlineModeEdit
                               className='mr-2 text-xl text-blue-900'
+                              onClick={() => navigate("/editPatient", { state: { patient: patient } })}
 
 
                             />
@@ -339,7 +363,9 @@ function Profile() {
           </div>
 
         </div>
-      </div></div>
+      </div>
+      <Footer />
+    </div>
   )
 }
 

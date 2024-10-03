@@ -2,22 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { doctorapi } from '../../api';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-function TodaysAppintmentTable() {
-    const [patients, setPatients] = useState([])
-    const doc_id = useSelector(state => state.doctorauth.doc_id)
-    const navigate = useNavigate()
-    useEffect(() => {
-        const fetchInfo = async () => {
-            try {
+function TodaysAppintmentTable({ todaysAppointments }) {
 
-                const response = await doctorapi.get("dashboard/", { params: { "doc_id": doc_id } })
-                console.log(response)
-                setPatients(response.data.patients)
-            } catch (error) {
-                console.log(error)
-            }
-        }; fetchInfo()
-    }, [])
+    const navigate = useNavigate()
+
     return (
 
         <div>
@@ -45,8 +33,8 @@ function TodaysAppintmentTable() {
                     </thead>
                     <tbody>
                         {
-                            patients && patients.map((patient, key) => (
-                                <tr key={key} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            todaysAppointments && todaysAppointments.map((patient, key) => (
+                                <tr key={key} className="bg-blue-500 text-white leading-normal">
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {patient.patient}
                                     </th>

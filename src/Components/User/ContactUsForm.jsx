@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import NavBar from './NavBar'
 import { api } from '../../api'
+import Footer from './Footer'
 
 function ContactUsForm() {
     const [info, setInfo] = useState({})
@@ -84,6 +85,7 @@ function ContactUsForm() {
                     </form>
                 </div>
             </section>
+            <Footer />
         </div>
     )
 }

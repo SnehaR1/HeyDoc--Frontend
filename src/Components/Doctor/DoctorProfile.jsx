@@ -20,7 +20,7 @@ function DoctorProfile() {
             {edit ? <EditDocProfile props={{ name, email, phone, is_HOD, department, doc_image, doc_id }} edit={setEdit} setDocInfo={setDocInfo} /> :
 
                 <div className='mt-2'>
-                    <form className="max-w-lg mx-auto shadow-lg p-5 my-2" >
+                    <form className="max-w-lg mx-auto shadow-lg p-5 mt-3 mb-4" >
                         <h4 className='flex justify-center text-2xl font-bold text-blue-700 my-2'>PROFILE</h4>
                         <div className="max-w-lg mx-auto p-3 flex flex-col justify-center items-center">
 

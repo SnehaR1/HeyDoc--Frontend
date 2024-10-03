@@ -41,6 +41,13 @@ import DoctorProfile from './Components/Doctor/DoctorProfile';
 import AddReport from './Components/Doctor/AddReport';
 import PatientReports from './Components/Doctor/PatientReports';
 import LeaveApplicationForm from './Components/Doctor/LeaveApplicationForm';
+import EditReport from './Components/Doctor/EditReport';
+import Reports from './Components/User/Reports';
+import EditPatient from './Components/User/EditPatient';
+import Appointments from './Components/Doctor/Appointments';
+import Department from './Components/User/Department';
+import Reciepts from './Components/User/Reciepts';
+import RecieptView from './Components/User/RecieptView';
 
 function App() {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
@@ -85,14 +92,23 @@ function App() {
           <Route path='/editDoctor' element={isAuthenticated && is_staff ? <EditDoctor /> : <Login />} />
           <Route path='/requests' element={isAuthenticated && is_staff ? <Requests /> : <Login />} />
           <Route path='/doctorHome' element={doc_authenticated ? <DoctorHome /> : <Login />} />
-          <Route path='/docPatients' element={doc_authenticated ? <DocPatients /> : <Login />} />
-          <Route path='/schedule' element={doc_authenticated ? <Schedule /> : <Login />} />
-          <Route path='/addReport' element={doc_authenticated ? <AddReport /> : <Login />} />
-          <Route path='/leaveApplication' element={doc_authenticated ? <LeaveApplicationForm /> : <Login />} />
-          <Route path='/docProfile' element={doc_authenticated ? <DoctorProfile /> : <Login />} />
-          <Route path='/patientReports' element={doc_authenticated ? <PatientReports /> : <Login />} />
+          <Route path='/docPatients' element={doc_authenticated ? <DocPatients /> : <DoctorLogin />} />
+          <Route path='/schedule' element={doc_authenticated ? <Schedule /> : <DoctorLogin />} />
+          <Route path='/addReport' element={doc_authenticated ? <AddReport /> : <DoctorLogin />} />
+          <Route path='/leaveApplication' element={doc_authenticated ? <LeaveApplicationForm /> : <DoctorLogin />} />
+          <Route path='/docProfile' element={doc_authenticated ? <DoctorProfile /> : <DoctorLogin />} />
+          <Route path='/editReport' element={doc_authenticated ? <EditReport /> : <DoctorLogin />} />
+          <Route path='/patientReports' element={doc_authenticated ? <PatientReports /> : <DoctorLogin />} />
+          <Route path='/appointments' element={doc_authenticated ? <Appointments /> : <DoctorLogin />} />
           <Route path='/onlineRoom' element={doc_authenticated || isAuthenticated ? <VideoRoomID /> : <Login />} />
           <Route path='/onlineRoom/:roomId' element={doc_authenticated || isAuthenticated ? <VideoRoom /> : <Login />} />
+          <Route path='/reports' element={isAuthenticated ? <Reports /> : <Login />} />
+          <Route path='/editPatient' element={isAuthenticated ? <EditPatient /> : <Login />} />
+          <Route path='/department' element={isAuthenticated ? <Department /> : <Login />} />
+          <Route path='/reciepts' element={isAuthenticated ? <Reciepts /> : <Login />} />
+          <Route path='/recieptView' element={isAuthenticated ? <RecieptView /> : <Login />} />
+
+
 
         </Routes>
       </Router>

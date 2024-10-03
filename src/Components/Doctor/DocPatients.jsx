@@ -108,6 +108,9 @@ function DocPatients() {
                                     Last Appointment Date
                                 </th>
                                 <th scope="col" className="px-6 py-3">
+                                    Active
+                                </th>
+                                <th scope="col" className="px-6 py-3">
                                     Reports
                                 </th>
                             </tr>
@@ -131,6 +134,9 @@ function DocPatients() {
                                         </td>
                                         <td className="px-6 py-4">
                                             {patient.last_appointment}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            {patient.is_active ? <span className='text-green-600'>Active</span> : <span className='text-red-600'>Not Active</span>}
                                         </td>
                                         <td className="px-6 py-4">
                                             <span className='text-blue-500 underline' onClick={() => {

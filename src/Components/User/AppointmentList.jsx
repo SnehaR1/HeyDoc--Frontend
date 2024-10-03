@@ -4,6 +4,7 @@ import { adminapi, api } from '../../api';
 import { useSelector } from 'react-redux';
 import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from 'react-router-dom';
+import Footer from './Footer';
 function AppointmentList() {
     const user = useSelector(state => state.auth.user_id)
     const [appointments, setAppointments] = useState([])
@@ -181,6 +182,7 @@ function AppointmentList() {
                     : <></>}
 
             </div>
+            <Footer />
 
 
 

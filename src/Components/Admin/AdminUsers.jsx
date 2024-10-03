@@ -40,8 +40,8 @@ function AdminUsers() {
         <div><AdminNavBar />
             <h1 className='text-blue-800 text-2xl my-3 font-bold'>USERS</h1>
             <div className="relative overflow-x-auto flex justify-center items-center ">
-                <table className="w-full mx-32 mt-3 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead className="text-xs text-white uppercase bg-blue-900 dark:bg-blue-700 dark:text-gray-400">
+                <table className="w-3/4 mx-4 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead className=" text-xs text-white uppercase bg-blue-900 dark:bg-blue-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" className="px-6 py-3">
                                 ID

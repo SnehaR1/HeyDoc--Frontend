@@ -2,6 +2,7 @@ import React from 'react'
 import NavBar from './NavBar'
 import { useLocation } from 'react-router-dom'
 import { TbChevronsDown } from 'react-icons/tb'
+import Footer from './Footer'
 
 function BlogPage() {
     const location = useLocation()
@@ -52,7 +53,7 @@ function BlogPage() {
 
                 </div>
             </div>
-
+            <Footer />
         </div >
     )
 }
