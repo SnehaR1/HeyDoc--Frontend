@@ -5,8 +5,8 @@ import { updateDoc } from '../../auth/doctorauthSlice';
 function EditDocProfile({ props, edit, setDocInfo }) {
     const [editInfo, setEditInfo] = useState({
         name: props.name,
-        email: props.email,
-        phone: props.phone,
+        doc_email: props.doc_email,
+        doc_phone: props.doc_phone,
         doc_image: props.doc_image,
         department: props.department,
         is_HOD: props.is_HOD
@@ -38,8 +38,8 @@ function EditDocProfile({ props, edit, setDocInfo }) {
 
         const formData = new FormData();
         formData.append('name', editInfo.name);
-        formData.append('email', editInfo.email);
-        formData.append('phone', editInfo.phone);
+        formData.append('doc_email', editInfo.doc_email);
+        formData.append('doc_phone', editInfo.doc_phone);
         formData.append('department', dept_id);
         formData.append('is_HOD', editInfo.is_HOD ? 'true' : 'false');
 
@@ -51,13 +51,13 @@ function EditDocProfile({ props, edit, setDocInfo }) {
             const response = await doctorapi.put(`edit_profile/${doc_id}/`, formData);
             console.log(response);
             const name = editInfo.name
-            const email = editInfo.email
-            const phone = editInfo.phone
+            const doc_email = editInfo.doc_email
+            const doc_phone = editInfo.doc_phone
             const doc_image = editInfo.doc_image
             const department = editInfo.department
             const is_HOD = editInfo.is_HOD
-            setDocInfo({ "name": name, "phone": phone, "email": email, "is_HOD": is_HOD, "department": department, "doc_image": doc_image })
-            dispatch(updateDoc({ name, email, phone, doc_image, department, is_HOD }))
+            setDocInfo({ "name": name, "doc_phone": doc_phone, "doc_email": doc_email, "is_HOD": is_HOD, "department": department, "doc_image": doc_image })
+            dispatch(updateDoc({ name, doc_email, doc_phone, doc_image, department, is_HOD }))
             edit(false);
         } catch (error) {
             console.log(error);
@@ -96,20 +96,20 @@ function EditDocProfile({ props, edit, setDocInfo }) {
                 <div className="mb-5">
                     <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                     <input
-                        value={editInfo.email}
-                        onChange={e => setEditInfo({ ...editInfo, email: e.target.value })}
+                        value={editInfo.doc_email}
+                        onChange={e => setEditInfo({ ...editInfo, doc_email: e.target.value })}
                         type="email"
-                        id="email"
-                        name="email"
+                        id="doc_email"
+                        name="doc_email"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     />
                 </div>
                 <div className="mb-5">
                     <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
                     <input
-                        value={editInfo.phone}
-                        onChange={e => setEditInfo({ ...editInfo, phone: e.target.value })}
-                        name='phone'
+                        value={editInfo.doc_phone}
+                        onChange={e => setEditInfo({ ...editInfo, doc_phone: e.target.value })}
+                        name='doc_phone'
                         type="text"
                         id="phone"
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

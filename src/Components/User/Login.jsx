@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import drimage from '../../Images/drimage.jpg';
 import { useNavigate } from 'react-router-dom';
-import { api } from '../../api';
+import { baseapi, api } from '../../api';
 import { LiaEyeSlashSolid } from "react-icons/lia";
 import { LiaEyeSolid } from "react-icons/lia";
 import { useDispatch } from 'react-redux';
@@ -19,7 +19,7 @@ function Login() {
         overflowY: 'auto',
     };
     const [info, setInfo] = useState({})
-    const [showPass, setShowpass] = useState(false)
+    const [showPass, setShowpass] = useState(true)
     const [resetPass, setResetPass] = useState(false)
     const [error, setError] = useState("")
 
@@ -34,7 +34,7 @@ function Login() {
         }
         try {
 
-            const response = await api.post("login/", info)
+            const response = await baseapi.post("login/", info)
             console.log(response)
             localStorage.clear();
             localStorage.setItem('access_token', response.data.data.access);
@@ -90,7 +90,7 @@ function Login() {
                             <div className='relative'>
 
                                 <input id='password' onChange={(e) => setInfo({ ...info, [e.target.name]: e.target.value })} type="password" name="password" className="my-3 block w-full md:w-96 border border-gray-300 rounded-md shadow-sm focus:ring-primary focus:border-primary p-3" placeholder="Enter your Password" required />
-                                {showPass ? <LiaEyeSolid onClick={() => { setShowpass(showPass => !showPass); const inputElement = document.getElementById("password"); inputElement.type = "text" }} className="absolute inset-y-0 right-3 flex items-center cursor-pointer my-auto" /> : <LiaEyeSlashSolid className="absolute inset-y-0 right-3 flex items-center cursor-pointer my-auto" onClick={() => { const inputElement = document.getElementById("password"); inputElement.type = "password"; setShowpass(showPass => !showPass) }} />}
+                                {showPass ? <LiaEyeSlashSolid onClick={() => { setShowpass(showPass => !showPass); const inputElement = document.getElementById("password"); inputElement.type = "text" }} className="absolute inset-y-0 right-3 flex items-center cursor-pointer my-auto" /> : <LiaEyeSolid className="absolute inset-y-0 right-3 flex items-center cursor-pointer my-auto" onClick={() => { const inputElement = document.getElementById("password"); inputElement.type = "password"; setShowpass(showPass => !showPass) }} />}
                             </div>
                         </div>
                         <div>

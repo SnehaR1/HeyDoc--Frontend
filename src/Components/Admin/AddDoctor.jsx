@@ -33,7 +33,7 @@ function AddDoctor() {
             }
         }
         try {
-            const response = await adminapi.post("doctor/", info, {
+            const response = await adminapi.post("doctor_form/", info, {
                 headers: {
                     "Content-Type": "multipart/form-data"
 
@@ -59,11 +59,11 @@ function AddDoctor() {
                     </div>
                     <div className='flex flex-col my-6'>
                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                        <input onChange={(e) => { setInfo({ ...info, [e.target.name]: e.target.value }) }} name="email" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus" placeholder="Email" required />
+                        <input onChange={(e) => { setInfo({ ...info, [e.target.name]: e.target.value }) }} name="doc_email" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus" placeholder="Email" required />
                     </div>
                     <div className='flex flex-col my-6'>
                         <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
-                        <input onChange={(e) => { setInfo({ ...info, [e.target.name]: e.target.value }) }} name="phone" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus" placeholder="Phone" required />
+                        <input onChange={(e) => { setInfo({ ...info, [e.target.name]: e.target.value }) }} name="doc_phone" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus" placeholder="Phone" required />
                     </div>
                     <div className='flex flex-col my-6'>
                         <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>

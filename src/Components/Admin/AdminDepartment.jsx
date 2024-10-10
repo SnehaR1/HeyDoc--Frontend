@@ -28,6 +28,7 @@ function AdminDepartment() {
 
     const handleBlock = async () => {
         try {
+            console.log(is_active)
             const info = { "dept_id": deptId, "is_active": is_active }
             const response = await adminapi.patch("department/", info)
             console.log(response)
@@ -92,16 +93,15 @@ function AdminDepartment() {
                                         onClick={() => navigate("/editDepartment", { state: { dept } })}
                                     />
                                     {dept.is_active ? (
-                                        <MdBlock
-                                            onClick={() => { setdeptID(dept.dept_id); setIsActive(false); setOpenModal(true); }}
-                                            className='text-red-500 text-xl mr-2'
-                                        />
-                                    ) : (
                                         <FaRegCircle
-                                            onClick={() => { setdeptID(dept.dept_id); setIsActive(true); setOpenModal(true); }}
+                                            onClick={() => { setdeptID(dept.dept_id); setIsActive(false); setOpenModal(true); }}
                                             className='text-green-500 text-xl mr-2'
                                         />
-                                    )}
+
+                                    ) : <MdBlock
+                                        onClick={() => { setdeptID(dept.dept_id); setIsActive(true); setOpenModal(true); }}
+                                        className='text-red-500 text-xl mr-2'
+                                    />}
                                 </td>
                             </tr>
 

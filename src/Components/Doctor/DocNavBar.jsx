@@ -10,10 +10,14 @@ function DocNavBar() {
     const dispatch = useDispatch()
     const handleLogout = async () => {
         try {
-            const response = doctorapi.post("logout/", { refresh_token: localStorage.getItem('refresh_token') }, { withCredentials: true })
+            const refresh_token = localStorage.getItem("refresh_token")
+            const response = doctorapi.post("logout/", { "refresh_token": refresh_token })
             console.log(response)
+
             dispatch(docLogout())
+            localStorage.clear()
             navigate("/doctorLogin")
+
 
 
         } catch (error) {

@@ -9,8 +9,8 @@ function EditDoctor() {
     console.log(doc)
     const [info, setInfo] = useState({
         name: doc?.name || '',
-        email: doc?.email || '',
-        phone: doc?.phone || '',
+        doc_email: doc?.doc_email || '',
+        doc_phone: doc?.doc_phone || '',
         department: doc?.department || '',
         fee: doc?.fee || 0,
         is_HOD: doc?.is_HOD || false,
@@ -45,8 +45,8 @@ function EditDoctor() {
 
 
             formData.append('name', info.name);
-            formData.append('email', info.email);
-            formData.append('phone', info.phone);
+            formData.append('doc_email', info.doc_email);
+            formData.append('doc_phone', info.doc_phone);
             formData.append('department', info.department);
             formData.append('fee', info.fee);
             formData.append('is_HOD', info.is_HOD);
@@ -82,11 +82,11 @@ function EditDoctor() {
                     </div>
                     <div className='flex flex-col my-6'>
                         <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                        <input value={info.email} onChange={(e) => { setInfo({ ...info, [e.target.name]: e.target.value }) }} name="email" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus" placeholder="Email" required />
+                        <input value={info.doc_email} onChange={(e) => { setInfo({ ...info, [e.target.name]: e.target.value }) }} name="doc_email" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus" placeholder="Email" required />
                     </div>
                     <div className='flex flex-col my-6'>
                         <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
-                        <input value={info.phone} onChange={(e) => { setInfo({ ...info, [e.target.name]: e.target.value }) }} name="phone" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus" placeholder="Phone" required />
+                        <input value={info.doc_phone} onChange={(e) => { setInfo({ ...info, [e.target.name]: e.target.value }) }} name="doc_phone" rows="4" className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus" placeholder="Phone" required />
                     </div>
 
                     <div className="max-w-sm mx-auto">
@@ -102,7 +102,7 @@ function EditDoctor() {
                             {departments.map((item) => (
                                 <option
                                     key={item.dept_id}
-                                    value={item.dept_id}
+                                    value={item.id}
                                     selected={info.department === item.dept_name}
                                 >
                                     {item.dept_name}

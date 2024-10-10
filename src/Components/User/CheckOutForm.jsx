@@ -45,7 +45,7 @@ function CheckOutForm() {
                 console.log(error)
             }
         }; fetchPatients();
-    }, [])
+    }, [refresh])
 
 
 
@@ -140,17 +140,17 @@ function CheckOutForm() {
                     Checkout Form
                 </h1>
 
-                <section className="bg-white shadow-lg rounded-lg p-6 mb-8">
+                <section className="bg-slate-50 shadow-xl rounded-lg p-6 mb-8">
                     <h2 className="text-2xl font-semibold text-center text-gray-700 mb-4">
                         Appointment For
                     </h2>
 
                     {patients.length !== 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                             {patients.map((patient, index) => (
                                 <div
                                     key={index}
-                                    className="relative bg-gray-50 border border-gray-200 rounded-lg p-4 flex items-center transition-all duration-300 hover:shadow-md"
+                                    className="relative bg-gray-50 border border-gray-200 rounded-lg py-4 px-2 flex items-center transition-all duration-300 hover:shadow-md"
                                 >
                                     <input
                                         name="patient"
@@ -315,7 +315,8 @@ function CheckOutForm() {
                     </div>
                 )}
 
-                <section className="bg-white shadow-lg rounded-lg p-6 mt-10">
+                <section className="bg-slate-50  shadow-xl mx-32 p-4 rounded-lg my-10">
+
                     <h2 className="text-2xl font-semibold text-center text-gray-700 mb-4">
                         Mode of Consultation
                     </h2>
@@ -357,6 +358,7 @@ function CheckOutForm() {
                         }
 
                     </div>
+
                     <h2 className="text-2xl font-semibold text-center text-gray-700 mb-4">
                         Mode of Payment
                     </h2>

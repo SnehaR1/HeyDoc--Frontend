@@ -10,6 +10,7 @@ import { addBookingDetails } from '../../booking/bookingSlice'
 function Department() {
     const { state } = useLocation()
     const { department, docs } = state || {}
+    console.log(docs)
     const [doctors, setDoctors] = useState(docs)
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -85,7 +86,7 @@ function Department() {
                         {
 
 
-                            doctors.map((doctor, key) => (
+                            docs.map((doctor, key) => (
 
 
 

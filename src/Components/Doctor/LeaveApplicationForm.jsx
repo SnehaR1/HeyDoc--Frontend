@@ -9,6 +9,8 @@ function LeaveApplicationForm() {
     const doc_id = useSelector(state => state.doctorauth.doc_id);
 
     const [info, setInfo] = useState({ "doctor": doc_id });
+    const [error, setError] = useState("")
+    const [message, setMessage] = useState("")
 
     const handleChange = (e) => {
         const { name, value, files } = e.target;
@@ -45,6 +47,7 @@ function LeaveApplicationForm() {
 
             console.log(response);
             setInfo({ "doctor": doc_id })
+            setMessage("Leave Application Submitted Successfully ")
 
         } catch (error) {
             console.error(error.response.data);
@@ -58,6 +61,17 @@ function LeaveApplicationForm() {
             <h1 className='text-blue-800 text-2xl my-4 font-bold'>Leave Application</h1>
             <div>
                 <form className="max-w-lg mx-auto mt-3 mb-4 p-4 shadow-xl" onSubmit={handleSubmit} encType='multipart/form-data'>
+                    {
+                        error !== "" && <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            <span class="font-medium">Danger alert!</span> Change a few things up and try submitting again.
+                        </div>
+                    }
+                    {
+                        message !== "" && <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                            <span class="font-medium">Success alert!</span> Change a few things up and try submitting again.
+                        </div>
+                    }
+
                     <div>
                         <label htmlFor="leave_type" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Leave Type</label>
                         <select onChange={handleChange} id="leave_type" name='leave_type' className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">

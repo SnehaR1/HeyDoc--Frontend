@@ -33,7 +33,8 @@ function AdminDashboard() {
     useEffect(() => {
         const fetchDashboardInfo = async () => {
             try {
-                const response = await adminapi.get("/dashboard")
+                const access_token = localStorage.getItem("access_token")
+                const response = await adminapi.get("/dashboard", { headers: { authorization: `Bearer ${access_token}` } })
                 console.log(response)
                 setTotalAppointments(response.data.total_appointments)
                 setTotalEarnings(response.data.total_earning["total"])
@@ -57,7 +58,8 @@ function AdminDashboard() {
 
     const handleNotification = async (id) => {
         try {
-            const response = await adminapi.patch(`dashboard/${id}/`)
+            const access_token = localStorage.getItem("access_token")
+            const response = await adminapi.patch(`dashboard/${id}/`, { headers: { authorization: `Bearer ${access_token}` } })
             console.log(response)
             const filteredNotifications = notifications.filter(notification => notification.id != id)
             setNotifications(filteredNotifications)

@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { doctorapi } from '../../api'
+import { basedocapi, doctorapi } from '../../api'
 import { LiaEyeSlashSolid } from "react-icons/lia";
 import { LiaEyeSolid } from "react-icons/lia";
 import { useDispatch } from 'react-redux';
 import { docLogin } from '../../auth/doctorauthSlice';
 import { useNavigate } from 'react-router-dom';
 import DoctorForgotPass from './DoctorForgotPass';
-import Cookies from 'js-cookie';
+
 function DoctorLogin() {
     const [openReqForm, setOpenReqForm] = useState(false)
     const [reqInfo, setReqInfo] = useState({})
@@ -17,42 +17,48 @@ function DoctorLogin() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const handleLogin = async (e) => {
-        e.preventDefault()
-        try {
-            for (const key in loginInfo) {
-                if (typeof loginInfo[key] === "string") {
-                    if (loginInfo[key].trim() === "") {
-                        alert("All fields should be filled properly!")
+        e.preventDefault();
 
-                    } else {
-                        loginInfo[key] = loginInfo[key].trim()
-                    }
+
+        for (const key in loginInfo) {
+            if (typeof loginInfo[key] === "string") {
+                if (loginInfo[key].trim() === "") {
+                    alert("All fields should be filled properly!");
+                    return;
+                } else {
+                    loginInfo[key] = loginInfo[key].trim();
                 }
             }
-            const response = await doctorapi.post("login/", loginInfo)
-            localStorage.clear();
-            localStorage.setItem('access_token', response.data.data.access);
-            localStorage.setItem('refresh_token', response.data.data.refresh);
-            console.log(response)
-            const name = response.data.data.user["name"]
-            const email = response.data.data.user["email"]
-            const phone = response.data.data.user["phone"]
-            const doc_image = response.data.data.user["doc_image"]
-            const is_HOD = response.data.data.user["is_HOD"]
-            const role = "doctor"
-            const department = response.data.data.user["department"]
-            const doc_id = response.data.data.user["doc_id"]
-
-
-            dispatch(docLogin({ name, email, phone, doc_image, is_HOD, role, department, doc_id }))
-
-            navigate("/doctorHome")
-
-        } catch (error) {
-            console.log(error)
         }
 
-    }
+        try {
+            const response = await basedocapi.post("login/", loginInfo);
+            console.log(response);
+
+
+            if (response.data && response.data.data && response.data.data.user) {
+                const { name, doc_email, doc_phone, doc_image, is_HOD, department, doc_id } = response.data.data.user;
+                localStorage.setItem("refresh_token", response.data.data.refresh);
+                localStorage.setItem("access_token", response.data.data.access);
+                const role = "doctor";
+
+
+                dispatch(docLogin({ name, doc_email, doc_phone, doc_image, is_HOD, role, department, doc_id }));
+
+
+                navigate("/doctorHome");
+            } else {
+                console.error("Unexpected response structure:", response.data);
+                alert("Login failed. Please try again.");
+            }
+
+        } catch (error) {
+            console.error("Error during login:", error);
+            alert("An error occurred during login. Please try again.");
+        }
+    };
+
+
 
     const handleReqSubmit = async (e) => {
         e.preventDefault()
@@ -68,7 +74,7 @@ function DoctorLogin() {
         }
 
         try {
-            const reqResponse = await doctorapi.post("doctor_request/", reqInfo)
+            const reqResponse = await basedocapi.post("doctor_request/", reqInfo)
             console.log(reqResponse)
             setMessage("The request has been sent succesfully!")
             setOpenReqForm(false)
@@ -112,7 +118,7 @@ function DoctorLogin() {
                         : <form className="space-y-4" onSubmit={handleLogin}>
                             <div>
                                 <label className="block text-md font-medium  text-blue-800">Email</label>
-                                <input onChange={(e) => { setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value }) }} type="email" name="email" className="my-3 block w-full border border-gray-500 rounded-md shadow-sm focus:ring-primary focus:border-primary p-3" placeholder="Enter your Email" />
+                                <input onChange={(e) => { setLoginInfo({ ...loginInfo, [e.target.name]: e.target.value }) }} type="doc_email" name="doc_email" className="my-3 block w-full border border-gray-500 rounded-md shadow-sm focus:ring-primary focus:border-primary p-3" placeholder="Enter your Email" />
                             </div>
                             <div>
                                 <label className="block text-dm font-medium  text-blue-800" >Password</label>

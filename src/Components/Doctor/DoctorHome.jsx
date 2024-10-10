@@ -31,7 +31,8 @@ function DoctorHome() {
     useEffect(() => {
         const fetchInfo = async () => {
             try {
-                const response = await doctorapi.get("dashboard/", { params: { "doc_id": doc_id } })
+                const access_token = localStorage.getItem("access_token")
+                const response = await doctorapi.get("dashboard/", { params: { "doc_id": doc_id } }, { headers: { authorization: `Bearer ${access_token}` } })
                 console.log(response)
                 setCurrentMonthEarning(response.data.current_month_total)
                 setAnnualEarning(response.data.current_year_total)

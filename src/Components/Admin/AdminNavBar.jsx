@@ -18,9 +18,9 @@ function AdminNavBar() {
     const dispatch = useDispatch()
     const handleLogout = async () => {
         try {
+            const refresh_token = localStorage.getItem("refresh_toke")
 
-
-            const response = await api.post("logout/", { withCredentials: true })
+            const response = await api.post("logout/", { "refresh_token": refresh_token, withCredentials: true })
 
 
             dispatch(logout())

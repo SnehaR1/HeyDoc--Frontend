@@ -30,7 +30,7 @@ function Profile() {
         console.log(error)
       }
     }; fetchPatients();
-  }, [refresh])
+  }, [refresh, user_id])
 
   const handlePatientSubmit = async (e) => {
     e.preventDefault()
@@ -143,7 +143,7 @@ function Profile() {
 
       </div>
 
-      <div>
+      <div className='my-6'>
         <h4 className='flex justify-center text-2xl font-bold text-blue-700 my-4'>Patients Registered From This Account</h4>
         <div>
 

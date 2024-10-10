@@ -64,7 +64,7 @@ function AppointmentList() {
         <div><NavBar />
 
 
-            <div className="relative container-flow mt-6 mx-6 overflow-x-auto">
+            <div className="relative container-flow mt-6 mx-6 overflow-x-auto min-h-screen">
                 {message ?
 
 
@@ -95,6 +95,9 @@ function AppointmentList() {
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 Payment Status
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Booking Status
                             </th>
                             <th scope="col" className="px-6 py-3">
                                 Edit
@@ -132,6 +135,9 @@ function AppointmentList() {
 
                                         <td className="px-6 py-4">
                                             {appointment.payment_status}
+                                        </td>
+                                        <td className="px-6 py-4">
+                                            <p className=''>{appointment.booking_status}</p>
                                         </td>
                                         {appointment.booking_status !== "Cancelled" ? (
                                             <td className="px-6 py-4 hover:underline hover:text-blue-500" onClick={() => { setOpenModal(true); setId(appointment.id); setPatient(appointment.patient) }}>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import signup from '../../Images/signup.jpg'
-import { api } from '../../api';
+import { baseapi } from '../../api';
 import { LiaEyeSlashSolid } from "react-icons/lia";
 import { LiaEyeSolid } from "react-icons/lia";
 import { useNavigate } from "react-router-dom"
@@ -24,6 +24,8 @@ function Register() {
         e.preventDefault()
         if (info["password"] !== info["confirm_password"])
             setError("Passwords don't match")
+        alert("Passwords don't match")
+
         for (const key in info) {
             if (typeof info[key] === 'string') {
                 info[key] = info[key].trim();
@@ -31,7 +33,7 @@ function Register() {
         }
 
         try {
-            const response = await api.post("register/", info)
+            const response = await baseapi.post("register/", info)
             console.log(response)
             setMessage("Account created successfully you can now login")
             setError("")

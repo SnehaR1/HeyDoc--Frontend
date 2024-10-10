@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { api } from '../../api';
+import { baseapi, api } from '../../api';
 import { otpVerified, userConfirmation } from '../../auth/resetPassSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,7 @@ function ForgotPassword() {
     const handleCredSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await api.post("otp_verification/", cred);
+            const response = await baseapi.post("otp_verification/", cred);
             console.log(response);
 
             let email = null;

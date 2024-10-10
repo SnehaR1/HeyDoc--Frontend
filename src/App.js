@@ -48,6 +48,7 @@ import Appointments from './Components/Doctor/Appointments';
 import Department from './Components/User/Department';
 import Reciepts from './Components/User/Reciepts';
 import RecieptView from './Components/User/RecieptView';
+import NotFound from './Components/NotFound';
 
 function App() {
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated)
@@ -104,9 +105,12 @@ function App() {
           <Route path='/onlineRoom/:roomId' element={doc_authenticated || isAuthenticated ? <VideoRoom /> : <Login />} />
           <Route path='/reports' element={isAuthenticated ? <Reports /> : <Login />} />
           <Route path='/editPatient' element={isAuthenticated ? <EditPatient /> : <Login />} />
-          <Route path='/department' element={isAuthenticated ? <Department /> : <Login />} />
+          <Route path='/department' element={<Department />} />
           <Route path='/reciepts' element={isAuthenticated ? <Reciepts /> : <Login />} />
           <Route path='/recieptView' element={isAuthenticated ? <RecieptView /> : <Login />} />
+          <Route path="*" element={<NotFound />} />
+
+
 
 
 

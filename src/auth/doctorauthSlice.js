@@ -3,8 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     isAuthenticated: false,
     name: null,
-    email: null,
-    phone: null,
+    doc_email: null,
+    doc_phone: null,
     department: null,
     is_HOD: null,
     doc_image: null,
@@ -20,8 +20,8 @@ const doctorauthSlice = createSlice({
         docLogin(state, action) {
             state.isAuthenticated = true
             state.name = action.payload.name;
-            state.email = action.payload.email;
-            state.phone = action.payload.phone;
+            state.doc_email = action.payload.doc_email;
+            state.doc_phone = action.payload.doc_phone;
             state.department = action.payload.department;
             state.is_HOD = action.payload.is_HOD;
             state.doc_image = action.payload.doc_image;
@@ -30,8 +30,8 @@ const doctorauthSlice = createSlice({
         },
         updateDoc(state, action) {
             state.name = action.payload.name;
-            state.phone = action.payload.phone;
-            state.email = action.payload.email;
+            state.doc_phone = action.payload.doc_phone;
+            state.doc_email = action.payload.doc_email;
             state.department = action.payload.department;
             state.is_HOD = action.payload.is_HOD;
             state.doc_image = action.payload.doc_image;
@@ -40,8 +40,8 @@ const doctorauthSlice = createSlice({
         docLogout(state) {
             state.isAuthenticated = false;
             state.name = null;
-            state.email = null;
-            state.phone = null;
+            state.doc_email = null;
+            state.doc_phone = null;
             state.department = null;
             state.is_HOD = null;
             state.doc_image = null;

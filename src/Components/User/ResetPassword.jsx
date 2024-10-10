@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import drimage from '../../Images/drimage.jpg';
-import { api } from '../../api';
+import { baseapi } from '../../api';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { removeResetPassInfo } from '../../auth/resetPassSlice';
@@ -32,7 +32,7 @@ function ResetPassword() {
             }
 
             const info = { "password": password, "email": email, "phone": phone }
-            const response = await api.patch("reset_password/", info)
+            const response = await baseapi.patch("reset_password/", info)
             console.log(response)
             dispatch(removeResetPassInfo())
             navigate("/login")

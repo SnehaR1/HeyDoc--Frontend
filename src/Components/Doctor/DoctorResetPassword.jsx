@@ -4,10 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { removeResetPassInfo } from '../../auth/resetPassSlice';
 import { useSelector } from 'react-redux';
-import { doctorapi } from '../../api';
+import { basedocapi, doctorapi } from '../../api';
 function DoctorResetPassword() {
-    const email = useSelector(state => state.resetPass.email)
-    const phone = useSelector(state => state.resetPass.phone)
+    const doc_email = useSelector(state => state.resetPass.email)
+    const doc_phone = useSelector(state => state.resetPass.phone)
+    console.log(doc_email, doc_phone)
     const [password, setPassword] = useState("")
     const [confirmPass, setConfirmPass] = useState("")
     const navigate = useNavigate()
@@ -21,8 +22,8 @@ function DoctorResetPassword() {
                 alert("Passwords don't match! Please try again.")
             }
 
-            const info = { "password": password, "email": email, "phone": phone }
-            const response = await doctorapi.patch("reset_password/", info)
+            const info = { "password": password, "doc_email": doc_email, "doc_phone": doc_phone }
+            const response = await basedocapi.patch("reset_password/", info)
             console.log(response)
             dispatch(removeResetPassInfo())
             navigate("/doctorLogin")

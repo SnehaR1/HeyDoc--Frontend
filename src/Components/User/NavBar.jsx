@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { VscAccount } from "react-icons/vsc";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { api } from '../../api';
+import { api, baseapi } from '../../api';
 import { logout } from '../../auth/authslice';
 import { FaAngleDown } from "react-icons/fa";
 function NavBar() {
@@ -20,11 +20,12 @@ function NavBar() {
 
     const fetchDepartments = async () => {
         try {
-            const access_token = localStorage.getItem('access_token')
-            const response = await api.get("departments/", { headers: { Authorization: `Bearer ${access_token}` } },)
+
+            const response = await baseapi.get("departments/",)
             console.log(response)
             setDepartments(response.data.departments)
             setDoctors(response.data.doctors)
+
 
         } catch (error) {
             console.log(error)
@@ -37,13 +38,13 @@ function NavBar() {
             const refresh_token = localStorage.getItem('refresh_token');
 
             const response = await api.post('logout/', {
-                refresh_token: refresh_token // Changed to use shorthand
+                "refresh_token": refresh_token
             }, {
                 headers: { 'Content-Type': 'application/json' }
             });
 
-            // localStorage.removeItem('access_token');
-            // localStorage.removeItem('refresh_token');
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
 
             dispatch(logout());
             console.log(response);
@@ -95,7 +96,7 @@ function NavBar() {
                             departments.map((dept, key) => (
                                 <li key={key}>
 
-                                    <p className="block px-4 py-2 hover:bg-gray-100 font-semibold " onClick={() => { const docs = doctors.filter(doctor => doctor.department === dept.dept_name); navigate("/department", { state: { department: dept, docs: docs } }) }}  >{dept.dept_name}</p>
+                                    <p className="block px-4 py-2 hover:bg-gray-100 font-semibold " onClick={() => { const doc_list = doctors.filter(doctor => doctor.department === dept.dept_name); console.log(doc_list); navigate("/department", { state: { department: dept, docs: doc_list } }) }}  >{dept.dept_name}</p>
                                 </li>
                             ))
                         }
@@ -109,7 +110,6 @@ function NavBar() {
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/aboutUs")}>About Us</p>
                 <p className="mx-4 text-grey-300 font-semibold text-l hover:text-blue-500" onClick={() => navigate("/contactUs")}>Contact Us</p>
 
-                <button className='text-white p-3 bg-blue-900 rounded-xl ml-3 font-bold  hover:bg-blue-500'>Appointment +</button>
 
                 {is_staff ? <p className="ml-8 text-grey-300 font-semibold text-l hover:text-blue-500 " onClick={() => navigate('/adminDashboard')}>Admin</p> : <></>}
                 <div className='relative'>
@@ -158,7 +158,7 @@ function NavBar() {
                 </div>
             </div>
 
-        </div>
+        </div >
     )
 }
 

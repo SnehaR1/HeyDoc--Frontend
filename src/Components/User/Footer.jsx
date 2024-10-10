@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 function Footer() {
     const navigate = useNavigate()
     return (
-        <div><footer className="bg-white overflow-x-hidden">
+        <div><footer className="bg-white overflow-x-hidden ">
             <div className="mx-auto max-w-full max-h-full  px-4 pb-6 pt-16 sm:px-6 lg:px-8 lg:pt-24 bg-blue-900 ">
                 <div className="container grid grid-cols-1 gap-8 lg:grid-cols-3">
                     <div>

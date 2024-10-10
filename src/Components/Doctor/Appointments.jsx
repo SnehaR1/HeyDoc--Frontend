@@ -1,61 +1,59 @@
-import React, { useState, useEffect } from 'react'
-import { doctorapi } from '../../api'
-import { useSelector } from 'react-redux'
-import DocNavBar from './DocNavBar'
-import { useNavigate } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { doctorapi } from '../../api';
+import { useSelector } from 'react-redux';
+import DocNavBar from './DocNavBar';
+import { useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+
 function Appointments() {
-
-    const [appointments, setAppointments] = useState([])
-    const [allAppointments, setAllAppointments] = useState([])
-
-    const doc_id = useSelector(state => state.doctorauth.doc_id)
-    const [patient, setPatient] = useState({})
-    const [date, setDate] = useState(null)
-    const navigate = useNavigate()
-    const [refresh, setRefresh] = useState(false)
-
+    const [appointments, setAppointments] = useState([]);
+    const [allAppointments, setAllAppointments] = useState([]);
+    const doc_id = useSelector(state => state.doctorauth.doc_id);
+    const [date, setDate] = useState(null);
+    const navigate = useNavigate();
+    const [refresh, setRefresh] = useState(false);
 
     useEffect(() => {
-
-        const csrfToken = Cookies.get('csrftoken');
-
-
         const fetchAppointments = async () => {
             try {
                 const response = await doctorapi.get("appointments/", {
-
-                    params: {
-                        "doc_id": doc_id
-                    },
-                    withCredentials: true,
+                    params: { "doc_id": doc_id },
                 });
-                console.log(response);
+                console.log(response); // Check response structure
+                setAllAppointments(response.data.appointments);
+                setAppointments(response.data.appointments); // Set appointments initially
             } catch (error) {
-                console.log(error)
+                console.log(error);
             }
+        };
 
-        }; fetchAppointments()
-    }, [refresh])
-
-
+        fetchAppointments();
+    }, [doc_id, refresh]);
 
     const handleFilter = (e) => {
-        e.preventDefault()
-
-        setAppointments(allAppointments.filter(appointment => appointment.booked_day === date))
-
-    }
+        e.preventDefault();
 
 
+        if (!date) {
+            alert("Please enter a date.");
+            return;
+        }
+
+        const filteredAppointments = allAppointments.filter(
+            appointment => appointment.booked_day === date
+        );
+
+
+        console.log(filteredAppointments);
+
+        setAppointments(filteredAppointments);
+    };
 
     return (
         <div>
             <DocNavBar />
             <h1 className='text-blue-800 text-2xl my-4 font-bold'>Appointments</h1>
-            <div className="relative overflow-x-auto flex flex-col justify-center items-center my-4 ">
-
-
+            <div className="relative overflow-x-auto flex flex-col justify-center items-center my-4">
                 <form className="max-w-lg mx-auto mb-4 mt-6" onSubmit={handleFilter} >
                     <div className="flex flex-row items-center space-x-4">
                         <button className='bg-blue-600 py-2 px-6 rounded-md text-white font-bold' onClick={() => { setRefresh(refresh => !refresh); }}>All</button>
@@ -97,77 +95,41 @@ function Appointments() {
                     </div>
                 </form>
 
-                {
-                    appointments ? <table className="w-3/4 mx-4 text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 my-4">
-                        <thead className="text-xs text-white uppercase bg-blue-900 dark:bg-blue-700 dark:text-gray-400">
+                {appointments.length > 0 ? (
+                    <table className="w-3/4 mx-4 text-sm text-left rtl:text-right text-gray-500 my-4">
+                        <thead className="text-xs text-white uppercase bg-blue-900">
                             <tr>
-                                <th scope="col" className="px-6 py-3">
-                                    ID
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Patient
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Appointment Date
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Time
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Consultation Mode
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Payment Status
-                                </th>
-                                <th scope="col" className="px-6 py-3">
-                                    Booking day
-                                </th>
-
-
+                                <th scope="col" className="px-6 py-3">ID</th>
+                                <th scope="col" className="px-6 py-3">Patient</th>
+                                <th scope="col" className="px-6 py-3">Appointment Date</th>
+                                <th scope="col" className="px-6 py-3">Time</th>
+                                <th scope="col" className="px-6 py-3">Consultation Mode</th>
+                                <th scope="col" className="px-6 py-3">Payment Status</th>
+                                <th scope="col" className="px-6 py-3">Booking Day</th>
                             </tr>
                         </thead>
                         <tbody>
-
                             {appointments.map((appointment, key) => (
-
-                                <tr key={key} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td className="px-6 py-4">
-                                        {appointment.id}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {appointment.patient.name}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {appointment.booked_day}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {appointment.time_slot}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {appointment.consultation_mode}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {appointment.payment_status}
-                                    </td>
-                                    <td className="px-6 py-4">
-                                        {appointment.date_of_booking}
-                                    </td>
+                                <tr key={key} className="bg-white border-b dark:bg-gray-800">
+                                    <td className="px-6 py-4">{appointment.id}</td>
+                                    <td className="px-6 py-4">{appointment.patient.name}</td>
+                                    <td className="px-6 py-4">{appointment.booked_day}</td>
+                                    <td className="px-6 py-4">{appointment.time_slot}</td>
+                                    <td className="px-6 py-4">{appointment.consultation_mode}</td>
+                                    <td className="px-6 py-4">{appointment.payment_status}</td>
+                                    <td className="px-6 py-4">{appointment.date_of_booking}</td>
                                 </tr>
-
-                            ))
-                            }
-
-
-                        </tbody></table> : <div className='flex justify-center items-center my-32'><h3 className='text-2xl text-blue-700 '>No Appointments</h3></div>
-                }
-
+                            ))}
+                        </tbody>
+                    </table>
+                ) : (
+                    <div className='flex justify-center items-center my-32'>
+                        <h3 className='text-2xl text-blue-700'>No Appointments</h3>
+                    </div>
+                )}
             </div>
-
-
-
-
         </div>
-    )
+    );
 }
 
-export default Appointments
+export default Appointments;

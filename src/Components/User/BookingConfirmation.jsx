@@ -114,7 +114,7 @@ function BookingConfirmation() {
             </div>
             <div className=' flex justify-center'>
 
-                <button id='download-button' onClick={handleDownload} className='mt-4 p-2 bg-blue-500 text-white rounded '>
+                <button id='download-button' onClick={handleDownload} className='mt-4 p-2 bg-blue-500 text-white rounded my-3 '>
                     Download PDF
                 </button>
             </div>

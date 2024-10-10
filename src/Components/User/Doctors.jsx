@@ -81,7 +81,7 @@ function Doctors() {
 
 
 
-            <div className="text-center p-10">
+            <div className="text-center p-10 ">
                 <h1 className="font-bold text-3xl mb-4">Meet Our Doctors</h1>
 
             </div>
@@ -92,7 +92,7 @@ function Doctors() {
                     <div className="relative flex-shrink-0">
                         <select onChange={(e) => { if (e.target.value === "All Departments") { setDoctors(allDoctors) } else { setFilteredDept(e.target.value); setDoctors(allDoctors.filter(doctor => doctor.department.dept_name === e.target.value)) } }}
                             id="department-select"
-                            className="block py-2.5 px-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                            className=" px-2 py-2.5  text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
                         >
                             <option value="All Departments">All Departments</option>
                             {departments.map((department, index) => (
@@ -108,7 +108,7 @@ function Doctors() {
                             onChange={(e) => setSearchDoc(e.target.value)}
                             type="search"
                             id="search-dropdown"
-                            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-r-none border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+                            className="block p-2.5  w-full text-sm text-gray-900 bg-gray-50 rounded-r-none border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
                             placeholder="Search your Doctor"
                             required
                         />
@@ -151,18 +151,18 @@ function Doctors() {
 
 
 
-                        <div className="m-3 max-w-sm">
-                            <div className="rounded-lg border bg-white px-4 pt-8 pb-10 shadow-lg">
-                                <div className="relative mx-auto w-36 rounded-full">
-
+                        <div className="m-3 max-w-sm flex flex-col h-half">
+                            <div className="flex flex-col rounded-lg border bg-white px-4 pt-4 pb-4 shadow-lg h-full">
+                                <div className="relative mx-auto w-36 rounded-full h-32">
                                     <img className="h-32 w-32 mx-auto rounded-full" src={`http://127.0.0.1:8000${doctor.doc_image}`} alt={doctor.name} />
                                 </div>
                                 <h1 className="my-1 text-center text-xl font-bold leading-8 text-gray-900">{doctor.name}</h1>
-                                <h3 className="font-lg text-semibold text-center leading-6 text-gray-600">{doctor.department.dept_name}</h3>
-                                <p className="text-center text-sm leading-6 text-gray-500 hover:text-gray-600">{doctor.description}</p>
-                                <button className="w-half rounded-xl bg-blue-600 px-4 py-3 text-xl font-medium text-white mt-3" onClick={() => handleBookingNavigation(doctor.doc_id)}>Book an Appointment</button>
+                                <h3 className="font-bold text-center leading-6 text-gray-500">{doctor.department.dept_name}</h3>
+                                <p className="text-center text-sm leading-6 text-gray-500 hover:text-gray-600 flex-grow mt-3">{doctor.description}</p>
+                                <button className="w-full rounded-xl bg-blue-600 px-4 py-3 text-xl font-medium text-white mt-3" onClick={() => handleBookingNavigation(doctor.doc_id)}>Book an Appointment</button>
                             </div>
                         </div>
+
                     ))
 
 

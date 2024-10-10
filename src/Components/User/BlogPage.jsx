@@ -8,6 +8,7 @@ function BlogPage() {
     const location = useLocation()
     const { blog } = location.state || {}
     console.log(blog)
+    console.log(blog.additional_images.length)
 
     const paragraphs = blog.content.split(/\n\s*\n/).filter(p => p.trim() !== '');
     return (
@@ -37,18 +38,21 @@ function BlogPage() {
 
 
                     <div class="py-6 bg-white dark:bg-gray-800">
-                        {paragraphs.map((p, key) => (<>
-                            <p key={key} className="md:w-[80%] xs:w-[90%] mx-auto pt-4 prose prose-lg dark:prose-dark">
-                                {p}
-                            </p>  <img
-                                key={key}
-                                src={key < blog.additional_images.length
-                                    ? `http://127.0.0.1:8000${blog.additional_images[key]["add_images"]}`
-                                    : ''}
-                                alt={`Additional Image ${key}`}
-                                className="w-[30%] xs:w-[50%] mx-auto my-2 rounded-lg"
-                            /></>
+                        {paragraphs.map((p, key) => (
+                            <div key={key}>
+                                <p className="md:w-[80%] xs:w-[90%] mx-auto pt-4 prose prose-lg dark:prose-dark">
+                                    {p}
+                                </p>
+                                {key < blog.additional_images.length && (
+                                    <img
+                                        src={`http://127.0.0.1:8000${blog.additional_images[key]["add_images"]}`}
+                                        alt={`Additional Image ${key}`}
+                                        className="w-[30%] xs:w-[50%] mx-auto my-2 rounded-lg"
+                                    />
+                                )}
+                            </div>
                         ))}
+
                     </div>
 
                 </div>

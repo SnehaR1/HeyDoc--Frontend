@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { otpVerified, userConfirmation } from '../../auth/resetPassSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { doctorapi } from '../../api';
+import { basedocapi, doctorapi } from '../../api';
 
 function DoctorForgotPass() {
     const [receiver, setReceiver] = useState('email');
@@ -17,23 +17,25 @@ function DoctorForgotPass() {
     const handleCredSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await doctorapi.post("otp_verification/", cred);
+            const response = await basedocapi.post("otp_verification/", cred);
             console.log(response);
 
             let email = null;
             let phone = null;
 
             if (receiver === "email") {
-                email = cred["email"];
+                email = cred["doc_email"];
+
             } else if (receiver === "phone") {
-                phone = cred["phone"];
+                phone = cred["doc_phone"];
+
             } else {
                 alert("Receiver value not set! Something went wrong from our side!");
                 return;
             }
 
-
             dispatch(userConfirmation({ email, phone }));
+
             setOtpPage(true);
 
         } catch (error) {
@@ -46,12 +48,12 @@ function DoctorForgotPass() {
     const handleOTPSubmit = async (e) => {
         e.preventDefault();
         try {
-            const phone = receiver === "phone" ? cred["phone"] : null;
-            const email = receiver === "email" ? cred["email"] : null;
+            const doc_phone = receiver === "phone" ? cred["doc_phone"] : null;
+            const doc_email = receiver === "email" ? cred["doc_email"] : null;
 
-            const info = { otp: String(otp), email, phone };
+            const info = { otp: String(otp), doc_email, doc_phone };
 
-            const response = await doctorapi.post("reset_password/", info);
+            const response = await basedocapi.post("reset_password/", info);
             console.log(response);
             dispatch(otpVerified());
             navigate('/docResetPassword');
@@ -117,7 +119,7 @@ function DoctorForgotPass() {
                         <div className="flex items-center justify-center">
                             {receiver === 'email' ? (
                                 <input
-                                    onChange={(e) => setCred({ ...cred, receiver: 'email', "email": e.target.value })}
+                                    onChange={(e) => setCred({ ...cred, receiver: 'email', "doc_email": e.target.value })}
                                     className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition-colors"
                                     type="email"
                                     name="email"
@@ -126,7 +128,7 @@ function DoctorForgotPass() {
                                 />
                             ) : (
                                 <input
-                                    onChange={(e) => setCred({ ...cred, receiver: 'phone', "phone": e.target.value })}
+                                    onChange={(e) => setCred({ ...cred, receiver: 'phone', "doc_phone": e.target.value })}
                                     className="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 transition-colors"
                                     type="tel"
                                     name="phone"
